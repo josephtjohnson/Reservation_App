@@ -1,3 +1,5 @@
+package model;
+
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
@@ -29,10 +31,19 @@ public class Customer{
           }
         }
     }
-    System.out.println("Customer information saved.");
+    System.out.println("model.Customer information saved.");
+  }
+  public String getFirstName() {
+    return firstName;
+  }
+  public String getLastName() {
+    return lastName;
+  }
+  public String getEmail() {
+    return email;
   }
   @Override
   public String toString(){
-    return "Customer: " + firstName + " " + lastName + " " + email;
+    return "model.Customer: " + firstName + " " + lastName + " " + email;
   }
 }

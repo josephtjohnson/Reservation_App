@@ -1,3 +1,5 @@
+package model;
+
 import java.util.Date;
 
 public class Reservation {
@@ -15,6 +17,6 @@ public class Reservation {
   
   @Override
   public String toString() {
-    return "Reservation: "+ customer + "" + room + "" + "Dates: " + checkInDate + "-" + checkOutDate;
+    return "model.Reservation: "+ customer + "" + room + "" + "Dates: " + checkInDate + "-" + checkOutDate;
   }
 }

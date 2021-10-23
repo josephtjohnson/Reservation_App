@@ -1,3 +1,5 @@
+package model;
+
 public class Room implements IRoom{
     private String roomNumber;
     private Double roomPrice;
@@ -33,6 +35,6 @@ public class Room implements IRoom{
 
     @Override
     public String toString() {
-        return "--Room: " + roomNumber  + "--Price: " + roomPrice + "--Type: " + roomType;
+        return "--model.Room: " + roomNumber  + "--Price: " + roomPrice + "--Type: " + roomType;
     }
 }
