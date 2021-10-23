@@ -19,7 +19,7 @@ public class Customer{
         }
         else {
           try {
-            throw new IllegalArgumentException("Invalid email format ex. j@email.com");
+            throw new IllegalArgumentException("Invalid email format (ex. j@email.com). ");
           }
           catch(IllegalArgumentException e) {
             System.out.println(e + "Please enter a valid email address: ");
@@ -29,9 +29,10 @@ public class Customer{
           }
         }
     }
+    System.out.println("Customer information saved.");
   }
   @Override
   public String toString(){
-    return "Customer: " + firstName + "" + lastName + "" + email;
+    return "Customer: " + firstName + " " + lastName + " " + email;
   }
 }
