@@ -3,7 +3,6 @@ package service;
 import model.Customer;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.Locale;
 
 public class CustomerService {
     Collection<Customer> customers = new HashSet<Customer>();
