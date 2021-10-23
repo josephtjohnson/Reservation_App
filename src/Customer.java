@@ -1,3 +1,6 @@
+import java.util.Scanner;
+import java.util.regex.Pattern;
+
 public class Customer{
   private String firstName;
   private String lastName;
@@ -6,33 +9,29 @@ public class Customer{
   public Customer(String firstName, String lastName, String email){
     boolean keepRunning = true;
     String emailRegex = "^(.+)@(.+).(.+)$";
-    pattern pattern = Pattern.compile(emailRegex);
+    Pattern pattern = Pattern.compile(emailRegex);
     this.firstName = firstName;
     this.lastName = lastName;
+    this.email = email;
     while (keepRunning){
-      try{
-        if(pattern.matcher(email).matches() == true) {
-          this.email = email;
-          keepRunning = false;
-        }
-      }
-      catch (IllegalArgumentException e){
-        System.out.println("Email format incorrect (ex. jeff@mail.com)");
-        System.out.println("Type email");
-        Scanner scanner = new Scanner(System.in);
-        String email = String.parsestring(scanner.nextLine());
-        if(pattern.matcher(email).matches() == true) { 
-          this.email = email;
+        if(pattern.matcher(this.email).matches()) {
           keepRunning = false;
         }
         else {
-        System.out.println("Invalid email format. Please try again (ex. jeff@mail.com)");
+          try {
+            throw new IllegalArgumentException("Invalid email format ex. j@email.com");
+          }
+          catch(IllegalArgumentException e) {
+            System.out.println(e + "Please enter a valid email address: ");
+            Scanner scanner = new Scanner(System.in);
+            String input = scanner.next();
+            this.email = input;
+          }
         }
-      }
     }
   }
   @Override
   public String toString(){
-    return "Customer: " + firstName + "" lastName "" email;
+    return "Customer: " + firstName + "" + lastName + "" + email;
   }
 }
