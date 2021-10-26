@@ -8,21 +8,20 @@ import model.Room;
 import java.util.*;
 
 public class ReservationService {
-    Collection<Reservation> reservations = new HashSet<Reservation>();
-    Map<String,IRoom> rooms = new HashMap<>();
+    private static ReservationService reservationService;
+    public Collection<Reservation> reservations = new HashSet<>();
+    public Collection<IRoom> rooms = new HashSet<>();
 
-    private static Reservation reservation = null;
-
-    public static Reservation getInstance() {
-        if (null == reservation) {
-            reservation = new Reservation();
+    public static ReservationService getInstance() {
+        if (null == reservationService) {
+            reservationService = new ReservationService();
         }
-        return reservation;
+        return reservationService;
     }
 
     public void addRoom(String roomNumber, Double roomPrice, IRoom.RoomType roomType, boolean isFree){
         IRoom room = new Room(roomNumber, roomPrice, roomType, isFree);
-        rooms.put(roomNumber, room);
+        rooms.add(room);
     }
     public IRoom getARoom(String roomId){
         for(IRoom room : rooms){
@@ -37,7 +36,8 @@ public class ReservationService {
     reservations.add(reservation);
     }
     public Collection<IRoom> findRooms(Date checkInDate, Date checkOutDate){
-    return n;
+
+        return null;
     }
     public Collection<Reservation> getCustomersReservation(Customer customer) {
     return null;
