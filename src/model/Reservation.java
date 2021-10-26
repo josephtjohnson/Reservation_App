@@ -8,7 +8,7 @@ public class Reservation {
   private Date checkInDate;
   private Date checkOutDate;
   
-  public Reservation(Customer customer, IRoom room, Date checkInDate, Date checkOutDate) {
+  public Reservation() {
     this.customer = customer;
     this.room = room;
     this.checkInDate = checkInDate;
