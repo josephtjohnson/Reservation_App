@@ -14,6 +14,12 @@ public class Reservation {
     this.checkInDate = checkInDate;
     this.checkOutDate = checkOutDate;
   }
+  public Date getCheckInDate() {
+    return checkInDate;
+  }
+  public Date getCheckOutDate(){
+    return checkOutDate;
+  }
 
   @Override
   public String toString() {
