@@ -29,6 +29,7 @@ public class ReservationService {
                 return room;
             }
         }
+        System.out.println("Room not found. Please verify room number and try again.");
         return null;
     }
     public void reserveARoom(Customer customer, IRoom room, Date checkInDate, Date checkOutDate) {
@@ -36,10 +37,31 @@ public class ReservationService {
     reservations.add(reservation);
     }
     public Collection<IRoom> findRooms(Date checkInDate, Date checkOutDate){
-
-        return null;
+        Collection<IRoom> roomList = new ArrayList<>();
+        roomList = rooms;
+        for (Reservation reservation : reservations) {
+            for (IRoom room : rooms) {
+                if((reservation.getCheckInDate().before(checkInDate)
+                    && reservation.getCheckOutDate().after(checkOutDate)
+                    && reservation.getRoom().equals(room))
+                    || (reservation.getCheckInDate().after(checkInDate)
+                    && reservation.getCheckOutDate().before(checkOutDate)
+                    && reservation.getRoom().equals(room))) {
+                    roomList.remove(room);
+                }
+            }
+        }
+        return roomList;
     }
     public Collection<Reservation> getCustomersReservation(Customer customer) {
+        Collection<Reservation> customerReservations = new ArrayList<>();
+        customerReservations = reservations;
+        for (Reservation reservation : reservations){
+            if(reservation.getCustomer() != customer) {
+                customerReservations.remove(reservation);
+            }
+            return customerReservations;
+        }
     return null;
     }
 
