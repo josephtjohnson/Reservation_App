@@ -62,7 +62,12 @@ public class ReservationService {
             }
             return customerReservations;
         }
-    return null;
+        System.out.println("No reservations found for this guest.");
+        return null;
     }
-
+    public void printAllReservations() {
+        for(Reservation reservation : reservations) {
+            System.out.println(reservation);
+        }
+    }
 }
