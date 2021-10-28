@@ -5,14 +5,14 @@ import java.util.Collection;
 import java.util.HashSet;
 
 public class CustomerService {
-    Collection<Customer> customers = new HashSet<Customer>();
-    private static CustomerService customerservice = null;
+    private static Collection<Customer> customers = new HashSet<Customer>();
+    private static CustomerService customerService = null;
 
     public static CustomerService getInstance() {
-        if(null == customerservice) {
-            customerservice = new CustomerService();
+        if(null == customerService) {
+            customerService = new CustomerService();
         }
-        return customerservice;
+        return customerService;
     }
     public void addCustomer(String email, String firstName, String lastName) {
         Customer customer = new Customer(firstName, lastName, email);
