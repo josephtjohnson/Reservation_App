@@ -24,7 +24,7 @@ public class HotelResource {
     public static Customer getCustomer(String email) {
         return customerService.getCustomer(email);
     }
-    public void createACustomer(String email, String firstName, String lastName) {
+    public static void createACustomer(String email, String firstName, String lastName) {
         customerService.addCustomer(email, firstName, lastName);
 
     }
