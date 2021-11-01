@@ -24,7 +24,11 @@ public class CustomerService {
                 return customer;
             }
         }
+        System.out.println("Customer does not exist");
         return null;
+    }
+    public Collection<Customer> getCustomers(){
+        return customers;
     }
     public Collection<Customer> getAllCustomers() {
         return customers;
