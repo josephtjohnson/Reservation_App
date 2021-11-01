@@ -22,7 +22,7 @@ public class ReservationService {
     public void addRoom(IRoom room){;
         roomList.add(room);
     }
-    
+
     public IRoom getARoom(String roomId){
         for(IRoom room : roomList){
             if(room.getRoomNumber().equals(roomId)){
