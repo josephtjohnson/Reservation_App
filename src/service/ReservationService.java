@@ -10,7 +10,7 @@ import java.util.*;
 public class ReservationService {
     private static ReservationService reservationService;
     public Collection<Reservation> reservations = new HashSet<>();
-    public Collection<IRoom> rooms = new HashSet<>();
+    public Collection<IRoom> roomList = new ArrayList<>();
 
     public static ReservationService getInstance() {
         if (null == reservationService) {
@@ -19,12 +19,12 @@ public class ReservationService {
         return reservationService;
     }
 
-    public void addRoom(String roomNumber, Double roomPrice, IRoom.RoomType roomType, boolean isFree){
-        IRoom room = new Room(roomNumber, roomPrice, roomType, isFree);
-        rooms.add(room);
+    public void addRoom(IRoom room){;
+        roomList.add(room);
     }
+    
     public IRoom getARoom(String roomId){
-        for(IRoom room : rooms){
+        for(IRoom room : roomList){
             if(room.getRoomNumber().equals(roomId)){
                 return room;
             }
@@ -32,15 +32,16 @@ public class ReservationService {
         System.out.println("Room not found. Please verify room number and try again.");
         return null;
     }
+    public Collection<IRoom> getRooms(){
+        return roomList;
+    }
     public void reserveARoom(Customer customer, IRoom room, Date checkInDate, Date checkOutDate) {
     Reservation reservation = new Reservation(customer, room, checkInDate, checkOutDate);
     reservations.add(reservation);
     }
     public Collection<IRoom> findRooms(Date checkInDate, Date checkOutDate){
-        Collection<IRoom> roomList = new ArrayList<>();
-        roomList = rooms;
         for (Reservation reservation : reservations) {
-            for (IRoom room : rooms) {
+            for (IRoom room : roomList) {
                 if((reservation.getCheckInDate().before(checkInDate)
                     && reservation.getCheckOutDate().after(checkOutDate)
                     && reservation.getRoom().equals(room))
