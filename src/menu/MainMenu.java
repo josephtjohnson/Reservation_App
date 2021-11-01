@@ -59,8 +59,22 @@ public class MainMenu {
                     String customerEmail = scanner.nextLine();
                     System.out.println("Customer email: " + customerEmail);
                     HotelResource.getCustomerReservations(customerEmail);
-
                     }
+                if (selection == 3) {
+                    Scanner newCustomer = new Scanner(System.in);
+                    System.out.println("Enter customer email: ");
+                    String customerEmail = scanner.nextLine();
+                    System.out.println("Enter customer first name: ");
+                    String customerFirstName = scanner.nextLine();
+                    System.out.println("Enter customer last name: ");
+                    String customerLastName = scanner.nextLine();
+                    HotelResource.createACustomer(customerEmail, customerFirstName, customerLastName);
+                }
+                if (selection == 4) {}
+                if (selection == 5) {
+                    System.exit(0);
+                }
+
             }
             catch(Exception e) {
                 System.out.println(e);
