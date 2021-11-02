@@ -19,7 +19,7 @@ public class ReservationService {
         return reservationService;
     }
 
-    public void addRoom(IRoom room){;
+    public void addRoom(IRoom room){
         roomList.add(room);
     }
 
