@@ -44,7 +44,6 @@ public class AdminMenu {
                     System.out.println("Please enter a room price");
                     Double roomPrice = Double.valueOf(scanner.nextLine());
                     System.out.println("Please enter a room type : (1) => SINGLE, (2) => DOUBLE");
-                    typeparse = true;
                     String roomTypeInput = scanner.nextLine();
                     switch (roomTypeInput){
                         case "1":
