@@ -70,16 +70,20 @@ public class MainMenu {
                     String customerLastName = scanner.nextLine();
                     HotelResource.createACustomer(customerEmail, customerFirstName, customerLastName);
                 }
-                if (selection == 4) {}
-                if (selection == 5) {
-                    System.exit(0);
+                if (selection == 4) {
+                    AdminMenu.adminMenu();
                 }
-
+                if (selection == 5) {
+                    keepRunning = false;
+                }
+                else {
+                    System.out.println("Input incorrect. \nPlease enter a number 1 through 5");
+                }
             }
             catch(Exception e) {
                 System.out.println(e);
+                System.out.println("Input incorrect. \nPlease enter a number 1 through 5");
             }
-
         }
     }
 }
