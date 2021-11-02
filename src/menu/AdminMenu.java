@@ -7,10 +7,7 @@ import model.Room;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class AdminMenu {
     public static void main(String args){
@@ -47,11 +44,9 @@ public class AdminMenu {
                     System.out.println("Please enter a room price");
                     Double roomPrice = Double.valueOf(scanner.nextLine());
                     System.out.println("Please enter a room type (single or double)");
-                    IRoom.RoomType roomType = IRoom.RoomType.valueOf(scanner.nextLine());
-                    System.out.println("Is this room free (true or false)?");
-                    boolean isFree = Boolean.parseBoolean(scanner.nextLine());
+                    IRoom.RoomType roomType = IRoom.RoomType.valueOf(scanner.nextLine().toUpperCase(Locale.ROOT));
                     List<IRoom> newRooms = new ArrayList<>();
-                    IRoom room = new Room(roomNumber, roomPrice, roomType, isFree);
+                    IRoom room = new Room(roomNumber, roomPrice, roomType, false);
                     newRooms.add(room);
                     AdminResource.addRoom(newRooms);
                 }
@@ -68,5 +63,4 @@ public class AdminMenu {
             }
         }
     }
-}
 }

@@ -15,7 +15,6 @@ public class MainMenu {
     public static void main(String[] args) {
         menu();
     }
-
     public static void menu() {
         boolean keepRunning = true;
         Scanner scanner = new Scanner(System.in);
@@ -48,8 +47,8 @@ public class MainMenu {
                     Date checkOut = null;
                     try {
                         checkOut = new SimpleDateFormat("MM-dd-yyyy").parse(checkInDate);
-                    } catch (ParseException e) {
-                        e.printStackTrace();
+                    } catch (IllegalArgumentException e) {
+                        System.out.println(e);
                     }
                     HotelResource.findARoom(checkIn, checkOut);
                 }

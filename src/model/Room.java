@@ -12,7 +12,6 @@ public class Room implements IRoom{
         this.roomType = roomType;
         this.isFree = isFree;
     }
-
     @Override
     public String getRoomNumber() {
         return roomNumber;
