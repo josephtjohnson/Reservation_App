@@ -43,8 +43,19 @@ public class AdminMenu {
                     String roomNumber = scanner.nextLine();
                     System.out.println("Please enter a room price");
                     Double roomPrice = Double.valueOf(scanner.nextLine());
-                    System.out.println("Please enter a room type (single or double)");
-                    IRoom.RoomType roomType = IRoom.RoomType.valueOf(scanner.nextLine().toUpperCase(Locale.ROOT));
+                    System.out.println("Please enter a room type : (1) => SINGLE, (2) => DOUBLE");
+                    typeparse = true;
+                    String roomTypeInput = scanner.nextLine();
+                    switch (roomTypeInput){
+                        case "1":
+                            roomType = IRoom.RoomType.SINGLE;
+                            break;
+                        case "2":
+                            roomType = IRoom.RoomType.DOUBLE:
+                            break;
+                        default:
+                            System.out.println("Please enter a valid room type (1 or 2)")
+                    }
                     List<IRoom> newRooms = new ArrayList<>();
                     IRoom room = new Room(roomNumber, roomPrice, roomType, false);
                     newRooms.add(room);
