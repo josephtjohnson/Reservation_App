@@ -39,7 +39,7 @@ public class ReservationService {
     Reservation reservation = new Reservation(customer, room, checkInDate, checkOutDate);
     reservations.add(reservation);
     }
-    public Collection<IRoom> findRooms(Date checkInDate, Date checkOutDate){
+    public Collection<IRoom> findRooms(Date checkInDate, Date checkOutDate, boolean isFree){
         for (Reservation reservation : reservations) {
             for (IRoom room : roomList) {
                 if((reservation.getCheckInDate().before(checkInDate)
@@ -48,6 +48,9 @@ public class ReservationService {
                     || (reservation.getCheckInDate().after(checkInDate)
                     && reservation.getCheckOutDate().before(checkOutDate)
                     && reservation.getRoom().equals(room))) {
+                    roomList.remove(room);
+                }
+                if(!reservation.getIsFree().equals(isFree)) {
                     roomList.remove(room);
                 }
             }
