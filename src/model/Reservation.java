@@ -7,6 +7,7 @@ public class Reservation {
   private IRoom room;
   private Date checkInDate;
   private Date checkOutDate;
+  private boolean isFree;
 
   public Reservation(Customer customer, IRoom room, Date checkInDate, Date checkOutDate) {
     this.customer = customer;
@@ -30,6 +31,10 @@ public class Reservation {
 
     return checkOutDate;
   }
+  public boolean getIsFree(){
+    
+    return isFree;
+    }
 
   @Override
   public String toString() {
