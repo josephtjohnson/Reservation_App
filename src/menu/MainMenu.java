@@ -30,59 +30,66 @@ public class MainMenu {
                 System.out.println("Option selected: " + userInput);
                 int selection = Integer.parseInt(userInput);
 
-                if (selection == 1) {
-                    Scanner dates = new Scanner(System.in);
-                    System.out.println("Enter check-in date: mm-dd-yyyy");
-                    String checkInDate = scanner.nextLine();
-                    System.out.println("Check-in Date: " + checkInDate);
-                    Date checkIn = null;
-                    try {
-                        checkIn = new SimpleDateFormat("MM-dd-yyyy").parse(checkInDate);
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-                    System.out.println("Enter check-out date: mm-dd-yyyy");
-                    String checkOutDate = scanner.nextLine();
-                    System.out.println("Check-out Date: " + checkOutDate);
-                    Date checkOut = null;
-                    try {
-                        checkOut = new SimpleDateFormat("MM-dd-yyyy").parse(checkInDate);
-                    } catch (IllegalArgumentException e) {
+                switch (selection) {
+                    
+                    case 1:
+                        findARoom();
+                        break;
+                
+                    case 2:
+                        getCustomerReservations();
+                        break
+                            
+                    case 3:
+                        createCustomer();
+                        break;
+                        
+                    case 4:
+                        AdminMenu.adminMenu();
+                        break;
+                        
+                    case 5:
+                        System.out.println("Application will now close");
+                        keepRunning = false;
+                        break;
+                 
+                    default:
                         System.out.println(e);
-                    }
-                    HotelResource.findARoom(checkIn, checkOut);
-                }
-                if (selection == 2) {
-                    Scanner email = new Scanner(System.in);
-                    System.out.println("Enter customer email: ");
-                    String customerEmail = scanner.nextLine();
-                    System.out.println("Customer email: " + customerEmail);
-                    HotelResource.getCustomerReservations(customerEmail);
-                    }
-                if (selection == 3) {
-                    Scanner newCustomer = new Scanner(System.in);
-                    System.out.println("Enter customer email: ");
-                    String customerEmail = scanner.nextLine();
-                    System.out.println("Enter customer first name: ");
-                    String customerFirstName = scanner.nextLine();
-                    System.out.println("Enter customer last name: ");
-                    String customerLastName = scanner.nextLine();
-                    HotelResource.createACustomer(customerEmail, customerFirstName, customerLastName);
-                }
-                if (selection == 4) {
-                    AdminMenu.adminMenu();
-                }
-                if (selection == 5) {
-                    keepRunning = false;
-                }
-                else {
-                    System.out.println("Input incorrect. \nPlease enter a number 1 through 5");
-                }
+                        System.out.println("Input incorrect. \nPlease enter a number 1 through 5");
             }
-            catch(Exception e) {
-                System.out.println(e);
-                System.out.println("Input incorrect. \nPlease enter a number 1 through 5");
+            catch (Exception e) {
+            System.out.println(e);
+                System.err.println("Input incorrect. \nPlease enter a number 1 through 5");
             }
         }
+    }
+    public static void findARoom() throws ParseException {
+        Scanner dates = new Scanner(System.in);
+        System.out.println("Enter check-in date: mm-dd-yyyy");
+        String checkInDate = scanner.nextLine();
+        System.out.println("Check-in Date: " + checkInDate);
+        Date checkIn = new SimpleDateFormat("MM-dd-yyyy").parse(checkInDate);
+        System.out.println("Enter check-out date: mm-dd-yyyy");
+        String checkOutDate = scanner.nextLine();
+        System.out.println("Check-out Date: " + checkOutDate);
+        Date checkOut = new SimpleDateFormat("MM-dd-yyyy").parse(checkOutDate);
+        HotelResource.findARoom(checkIn, checkOut);
+    }
+    public static void getCustomerReservations() {
+        Scanner email = new Scanner(System.in);
+        System.out.println("Enter customer email: ");
+        String customerEmail = scanner.nextLine();
+        System.out.println("Customer email: " + customerEmail);
+        HotelResource.getCustomerReservations(customerEmail);
+    }
+    public static void createCustomer() {
+        Scanner newCustomer = new Scanner(System.in);
+        System.out.println("Enter customer email: ");
+        String customerEmail = scanner.nextLine();
+        System.out.println("Enter customer first name: ");
+        String customerFirstName = scanner.nextLine();
+        System.out.println("Enter customer last name: ");
+        String customerLastName = scanner.nextLine();
+        HotelResource.createACustomer(customerEmail, customerFirstName, customerLastName);
     }
 }
