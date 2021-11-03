@@ -42,9 +42,10 @@ public class AdminMenu {
                     case 4:
                         addRooms();
                     case 5:
-                        addTestCustomers();
                         addTestRooms();
+                        addTestCustomers();
                         addTestReservations();
+                        System.out.println("Test data created")
                         break;
                     case 6:
                         MainMenu.menu();
@@ -84,7 +85,7 @@ public class AdminMenu {
         AdminResource.addRoom(newRooms);
     }
     public static void addTestRooms(){
-        List<IRoom> testRooms - new ArrayList<>();
+        List<IRoom> testRooms = new ArrayList<>();
         for(int i = 1; i < 10; i++) {
             String roomNumber = i;
             if (i % 2 ==0){
@@ -108,6 +109,19 @@ public class AdminMenu {
             String customerFirstName = name;
             String customerLastName = "Tester";
             HotelResource.createACustomer(customerEmail, customerFirstName, customerLastName);
+        }
+    }
+    public static void addTestReservations() {
+        List<Customer> customers = new ArrayList<>(CustomerService.getAllCustomers());
+        List<IRoom> rooms = new ArrayList<>(ReservationServie.getRooms());
+        Date checkInDate = 01-01-2021;
+        Date checkIn = new SimpleDateFormat("MM-dd-yyyy").parse(checkInDate);
+        Date checkOutDate = 01-01-2021;
+        Date checkOut = new SimpleDateFormat("MM-dd-yyyy").parse(checkOutDate);
+        for(Customer customer:customers){
+            for(IRoom room:rooms){
+                HotelResource.bookARoom(customerEmail, room, checkIn, checkOut)
+            }
         }
     }
 }
