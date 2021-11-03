@@ -63,6 +63,7 @@ public class MainMenu {
             }
         }
     }
+    
     public static void findARoom() throws ParseException {
         Scanner dates = new Scanner(System.in);
         System.out.println("Enter check-in date: mm-dd-yyyy");
@@ -73,8 +74,28 @@ public class MainMenu {
         String checkOutDate = scanner.nextLine();
         System.out.println("Check-out Date: " + checkOutDate);
         Date checkOut = new SimpleDateFormat("MM-dd-yyyy").parse(checkOutDate);
-        HotelResource.findARoom(checkIn, checkOut);
+        System.out.println("Will this room be free? Y or N");
+        String cost = scanner.nextLine();
+        try {
+            switch (cost) {
+                case "Y":
+                    isFree = false;
+                    break;
+                case "N":
+                    isFree = true;
+                    break;
+                default:
+                    System.out.println(e);
+                    System.out.println("Input incorrect. \nPlease enter Y or N");
+            }
+        }
+        catch (Exception e) {
+            System.out.println(e);
+            System.err.println("Input incorrect. \nPlease enter Y or N");
+        }
+        HotelResource.findARoom(checkIn, checkOut, isFree);
     }
+    
     public static void getCustomerReservations() {
         Scanner email = new Scanner(System.in);
         System.out.println("Enter customer email: ");
@@ -82,6 +103,7 @@ public class MainMenu {
         System.out.println("Customer email: " + customerEmail);
         HotelResource.getCustomerReservations(customerEmail);
     }
+    
     public static void createCustomer() {
         Scanner newCustomer = new Scanner(System.in);
         System.out.println("Enter customer email: ");
