@@ -28,16 +28,16 @@ public class HotelResource {
         customerService.addCustomer(email, firstName, lastName);
 
     }
-    public IRoom getRoom(String roomNumber){
+    public static IRoom getRoom(String roomNumber){
         return reservationService.getARoom(roomNumber);
     }
-    public void bookARoom(String customerEmail, IRoom room, Date checkInDate, Date checkOutDate) {
+    public static void bookARoom(String customerEmail, IRoom room, Date checkInDate, Date checkOutDate) {
         reservationService.reserveARoom(customerService.getCustomer(customerEmail), room, checkInDate, checkOutDate);
     }
-    public static Collection<Reservation> getCustomerReservations(String customerEmail) {
+    public static Collection<Reservation> getAllCustomerReservations(String customerEmail) {
         return reservationService.getCustomersReservation(customerService.getCustomer(customerEmail));
     }
-    public static Collection<IRoom> findARoom(Date checkInDate, Date checkOutDate, boolean isFree) {
+    public static Collection<IRoom> findARoom() {
         return reservationService.findRooms(checkInDate, checkOutDate, isFree);
     }
 }
