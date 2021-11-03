@@ -94,6 +94,35 @@ public class MainMenu {
             System.err.println("Input incorrect. \nPlease enter Y or N");
         }
         HotelResource.findARoom(checkIn, checkOut, isFree);
+        System.out.println("Book a room? Y or N");
+        String book = scanner.nextLine();
+        try {
+            switch (book) {
+                case "Y":
+                    System.out.println("Enter customer email");
+                    String customerEmail = scanner.nextLine();
+                    System.out.println("Enter room number");
+                    String roomNumber = scanner.nextLine();
+                    System.out.println("Enter check in date mm-dd-yyy");
+                    Date checkInDate = scanner.nextLine();
+                    Date checkIn = new SimpleDateFormat("MM-dd-yyyy").parse(checkInDate);
+                    System.out.println("Enter check out date mm-dd-yyyy");
+                    Date checkOutDate = scanner.nextLine();
+                    Date checkOut = new SimpleDateFormat("MM-dd-yyyy").parse(checkOutDate);
+                    HotelResource.bookARoom(customerEmail, HotelResouce.getRoom(roomNumber), checkIn, checkOut);
+                    System.out.println("Room reserved!");
+                    break;
+                case "N":
+                    break;
+                default:
+                    System.out.println(e);
+                    System.out.println("Input incorrect. \nPlease enter Y or N");
+            }
+        }
+        catch (Exception e) {
+            System.out.println(e);
+            System.err.println("Input incorrect. \nPlease enter Y or N");
+        }
     }
     
     public static void getCustomerReservations() {
