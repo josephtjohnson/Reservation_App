@@ -38,28 +38,7 @@ public class AdminMenu {
                     AdminResource.displayAllReservations();
                 }
                 if (selection == 4) {
-                    Scanner addRoom = new Scanner(System.in);
-                    System.out.println("Please enter a room number");
-                    String roomNumber = scanner.nextLine();
-                    System.out.println("Please enter a room price");
-                    Double roomPrice = Double.valueOf(scanner.nextLine());
-                    System.out.println("Please enter a room type : (1) => SINGLE, (2) => DOUBLE");
-                    String roomTypeInput = scanner.nextLine();
-                    IRoom.RoomType roomType = null;
-                    switch (roomTypeInput){
-                        case "1":
-                            roomType = IRoom.RoomType.SINGLE;
-                            break;
-                        case "2":
-                            roomType = IRoom.RoomType.DOUBLE;
-                            break;
-                        default:
-                            System.out.println("Please enter a valid room type (1 or 2)");
-                    }
-                    List<IRoom> newRooms = new ArrayList<>();
-                    IRoom room = new Room(roomNumber, roomPrice, roomType, false);
-                    newRooms.add(room);
-                    AdminResource.addRoom(newRooms);
+                    addRooms();
                 }
                 if (selection == 5) {
                     keepRunning = false;
@@ -73,5 +52,28 @@ public class AdminMenu {
                 System.out.println("Input incorrect. \nPlease enter a number 1 through 5");
             }
         }
+    }
+    public static void addRooms(){
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Please enter a room number");
+        String roomNumber = scanner.nextLine();
+        System.out.println("Please enter a room price");
+        Double roomPrice = Double.valueOf(scanner.nextLine());
+        System.out.println("Please enter a room type : (1) => SINGLE, (2) => DOUBLE");
+        String roomTypeInput = scanner.nextLine();
+        switch (roomTypeInput){
+            case "1":
+                roomType = IRoom.RoomType.SINGLE;
+                break;
+            case "2":
+                roomType = IRoom.RoomType.DOUBLE;
+                break;
+            default:
+                System.out.println("Please enter a valid room type (1 or 2)");
+        }
+        List<IRoom> newRooms = new ArrayList<>();
+        IRoom room = new Room(roomNumber, roomPrice, roomType, false);
+        newRooms.add(room);
+        AdminResource.addRoom(newRooms);
     }
 }
