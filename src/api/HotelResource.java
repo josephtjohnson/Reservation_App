@@ -37,7 +37,7 @@ public class HotelResource {
     public static Collection<Reservation> getCustomerReservations(String customerEmail) {
         return reservationService.getCustomersReservation(customerService.getCustomer(customerEmail));
     }
-    public static Collection<IRoom> findARoom(Date checkInDate, Date checkOutDate) {
-        return reservationService.findRooms(checkInDate, checkOutDate);
+    public static Collection<IRoom> findARoom(Date checkInDate, Date checkOutDate, boolean isFree) {
+        return reservationService.findRooms(checkInDate, checkOutDate, isFree);
     }
 }
