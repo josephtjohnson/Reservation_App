@@ -45,15 +45,16 @@ public class AdminMenu {
                     Double roomPrice = Double.valueOf(scanner.nextLine());
                     System.out.println("Please enter a room type : (1) => SINGLE, (2) => DOUBLE");
                     String roomTypeInput = scanner.nextLine();
+                    IRoom.RoomType roomType = null;
                     switch (roomTypeInput){
                         case "1":
                             roomType = IRoom.RoomType.SINGLE;
                             break;
                         case "2":
-                            roomType = IRoom.RoomType.DOUBLE:
+                            roomType = IRoom.RoomType.DOUBLE;
                             break;
                         default:
-                            System.out.println("Please enter a valid room type (1 or 2)")
+                            System.out.println("Please enter a valid room type (1 or 2)");
                     }
                     List<IRoom> newRooms = new ArrayList<>();
                     IRoom room = new Room(roomNumber, roomPrice, roomType, false);
