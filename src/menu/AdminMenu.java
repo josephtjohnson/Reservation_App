@@ -28,23 +28,23 @@ public class AdminMenu {
                 System.out.println("Option selected: " + userInput);
                 int selection = Integer.parseInt(userInput);
 
-                if (selection == 1) {
-                    AdminResource.getAllCustomers();
-                }
-                if (selection == 2) {
-                    AdminResource.getAllRooms();
-                }
-                if (selection == 3) {
-                    AdminResource.displayAllReservations();
-                }
-                if (selection == 4) {
-                    addRooms();
-                }
-                if (selection == 5) {
-                    keepRunning = false;
-                }
-                else {
-                    System.out.println("Input incorrect. \nPlease enter a number 1 through 5");
+                switch (selection) {
+                    case 1:
+                        AdminResource.getAllCustomers();
+                        break;
+                    case 2:
+                        AdminReseource.printRooms();
+                        break;
+                    case 3:
+                        AdminResource.displayAllReservations();
+                        break;
+                    case 4:
+                        addRooms();
+                    case 5:
+                        MainMenu.menu();
+                        break;                
+                    default:
+                        System.out.println("Input incorrect. \nPlease enter a number 1 through 5");
                 }
             }
             catch(Exception e) {
