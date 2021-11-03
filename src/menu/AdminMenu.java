@@ -23,7 +23,8 @@ public class AdminMenu {
                 System.out.println("2. See all rooms");
                 System.out.println("3. See all reservations");
                 System.out.println("4. Add a room");
-                System.out.println("5. Back to main menu");
+                System.out.println("5. Create test data (Customers, Rooms, Reservations)");
+                System.out.println("6. Back to main menu");
                 String userInput = scanner.nextLine();
                 System.out.println("Option selected: " + userInput);
                 int selection = Integer.parseInt(userInput);
@@ -41,6 +42,11 @@ public class AdminMenu {
                     case 4:
                         addRooms();
                     case 5:
+                        addTestCustomers();
+                        addTestRooms();
+                        addTestReservations();
+                        break;
+                    case 6:
                         MainMenu.menu();
                         break;                
                     default:
@@ -76,5 +82,32 @@ public class AdminMenu {
         IRoom room = new Room(roomNumber, roomPrice, roomType, false);
         newRooms.add(room);
         AdminResource.addRoom(newRooms);
+    }
+    public static void addTestRooms(){
+        List<IRoom> testRooms - new ArrayList<>();
+        for(int i = 1; i < 10; i++) {
+            String roomNumber = i;
+            if (i % 2 ==0){
+                Double roomPrice = i;
+                IRoom room = new Room(roomNumber, roomPrice, IRoom.RoomType.SINGLE, false);
+                testRooms.add(room);
+                AdminResource.addRoom(testRooms);
+            }
+            else {
+                Double roomPrice = 0.0;
+                IRoom room = new FreeRoom(roomNumber, roomPrice, IRoom.RoomType.DOUBLE, true);
+                testRooms.add(room);
+                AdminResource.addRoom(testRooms);
+            }
+        } 
+    }
+    public static void addTestCustomers() {
+        var names = List.of("Jeff", "Todd", "Clare", "Ashley", "Pasq");
+        for(String name:names){
+            String customerEmail = name + "@gmail";
+            String customerFirstName = name;
+            String customerLastName = "Tester";
+            HotelResource.createACustomer(customerEmail, customerFirstName, customerLastName);
+        }
     }
 }
