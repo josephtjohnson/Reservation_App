@@ -1,10 +1,10 @@
 package model;
 
 public class Room implements IRoom{
-    private final String roomNumber;
-    private final Double roomPrice;
-    private final RoomType roomType;
-    private final boolean isFree;
+    private String roomNumber;
+    private Double roomPrice;
+    private RoomType roomType;
+    private boolean isFree;
 
     public Room(String roomNumber, Double roomPrice, RoomType roomType, boolean isFree){
         this.roomNumber = roomNumber;

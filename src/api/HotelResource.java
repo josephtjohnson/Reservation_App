@@ -10,7 +10,7 @@ import java.util.Collection;
 import java.util.Date;
 
 public class HotelResource {
-    private static HotelResource hotelResource = null;
+    private static final HotelResource hotelResource = null;
     public static final CustomerService customerService = CustomerService.getInstance();
     public static final ReservationService reservationService = ReservationService.getInstance();
 
