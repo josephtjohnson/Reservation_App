@@ -61,6 +61,7 @@ public class AdminMenu {
         Double roomPrice = Double.valueOf(scanner.nextLine());
         System.out.println("Please enter a room type : (1) => SINGLE, (2) => DOUBLE");
         String roomTypeInput = scanner.nextLine();
+        IRoom.RoomType roomType = null;
         switch (roomTypeInput){
             case "1":
                 roomType = IRoom.RoomType.SINGLE;
