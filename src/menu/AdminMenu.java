@@ -123,7 +123,7 @@ public class AdminMenu {
     public static void addTestCustomers() {
         var names = List.of("Jeff", "Todd", "Clare", "Ashley", "Pasq");
         for(String name:names){
-            String customerEmail = name + "@gmail";
+            String customerEmail = name + "@gmail.com";
             String customerFirstName = name;
             String customerLastName = "Tester";
             HotelResource.createACustomer(customerEmail, customerFirstName, customerLastName);
