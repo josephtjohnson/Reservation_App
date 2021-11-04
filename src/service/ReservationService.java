@@ -59,7 +59,6 @@ public class ReservationService {
     }
     public Collection<Reservation> getCustomersReservation(Customer customer) {
         Collection<Reservation> customerReservations = new ArrayList<>();
-        customerReservations = reservations;
         for (Reservation reservation : reservations){
             if(reservation.getCustomer().equals(customer)) {
                 customerReservations.add(reservation);
