@@ -1,10 +1,10 @@
 package model;
 
 public class Room implements IRoom{
-    private String roomNumber;
-    private Double roomPrice;
-    private RoomType roomType;
-    private boolean isFree;
+    private final String roomNumber;
+    private final Double roomPrice;
+    private final RoomType roomType;
+    private final boolean isFree;
 
     public Room(String roomNumber, Double roomPrice, RoomType roomType, boolean isFree){
         this.roomNumber = roomNumber;
@@ -37,6 +37,6 @@ public class Room implements IRoom{
 
     @Override
     public String toString() {
-        return "--model.Room: " + roomNumber  + "--Price: " + roomPrice + "--Type: " + roomType;
+        return "--Room Number: " + roomNumber  + " --Price: " + roomPrice + " --Type: " + roomType;
     }
 }

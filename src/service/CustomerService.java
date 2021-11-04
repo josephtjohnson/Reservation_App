@@ -30,9 +30,5 @@ public class CustomerService {
     public Collection<Customer> getCustomers(){
         return customers;
     }
-    public Collection<Customer> getAllCustomers() {
-        return customers;
-    }
-
 
 }

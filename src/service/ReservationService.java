@@ -11,7 +11,6 @@ public class ReservationService {
     private static ReservationService reservationService;
     public Collection<Reservation> reservations = new HashSet<>();
     public Collection<IRoom> roomList = new ArrayList<>();
-
     public static ReservationService getInstance() {
         if (null == reservationService) {
             reservationService = new ReservationService();
@@ -42,7 +41,7 @@ public class ReservationService {
     public Collection<IRoom> findRooms(Date checkInDate, Date checkOutDate, boolean isFree){
         List<IRoom> tempRoomList = new ArrayList<>(roomList);
         for (Reservation reservation : reservations) {
-            for (IRoom room : roomList) {
+            for (IRoom room : tempRoomList) {
                 if((reservation.getCheckInDate().before(checkInDate)
                     && reservation.getCheckOutDate().after(checkOutDate)
                     && reservation.getRoom().equals(room))
@@ -62,13 +61,16 @@ public class ReservationService {
         Collection<Reservation> customerReservations = new ArrayList<>();
         customerReservations = reservations;
         for (Reservation reservation : reservations){
-            if(reservation.getCustomer() != customer) {
-                customerReservations.remove(reservation);
+            if(reservation.getCustomer().equals(customer)) {
+                customerReservations.add(reservation);
             }
             return customerReservations;
         }
         System.out.println("No reservations found for this guest.");
         return null;
+    }
+    public Collection<Reservation> getReservations(){
+        return reservations;
     }
     public void printAllReservations() {
         for(Reservation reservation : reservations) {

@@ -2,10 +2,7 @@ package menu;
 
 import api.AdminResource;
 import api.HotelResource;
-import model.Customer;
-import model.FreeRoom;
-import model.IRoom;
-import model.Room;
+import model.*;
 import service.CustomerService;
 
 import java.text.ParseException;
@@ -13,6 +10,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 import static api.AdminResource.*;
+import static api.HotelResource.bookARoom;
 
 public class AdminMenu {
     public static void main(String args){
@@ -36,10 +34,10 @@ public class AdminMenu {
 
                 switch (selection) {
                     case 1:
-                        getAllCustomers();
+                        customerList();
                         break;
                     case 2:
-                        getAllRooms();
+                        roomList();
                         break;
                     case 3:
                         displayAllReservations();
@@ -63,6 +61,18 @@ public class AdminMenu {
                 System.out.println(e);
                 System.out.println("Input incorrect. \nPlease enter a number 1 through 5");
             }
+        }
+    }
+    public static void customerList(){
+        List<Customer> customers = new ArrayList<>(getAllCustomers());
+        for(Customer customer:customers){
+            System.out.println(customer);
+        }
+    }
+    public static void roomList() {
+        List<IRoom> rooms = new ArrayList<>(getAllRooms());
+        for(IRoom room:rooms){
+            System.out.println(room);
         }
     }
     public static void addRooms(){
@@ -93,19 +103,22 @@ public class AdminMenu {
         List<IRoom> testRooms = new ArrayList<>();
         for(int i = 1; i < 10; i++) {
             String roomNumber = String.valueOf(i);
-            if (i % 2 ==0){
+            if (i % 2 == 0){
                 Double roomPrice = Double.valueOf(i);
                 IRoom room = new Room(roomNumber, roomPrice, IRoom.RoomType.SINGLE, false);
-                testRooms.add(room);
-                AdminResource.addRoom(testRooms);
+                if(!testRooms.contains(room)) {
+                    testRooms.add(room);
+                }
             }
             else {
                 Double roomPrice = 0.0;
                 IRoom room = new FreeRoom(roomNumber, roomPrice, IRoom.RoomType.DOUBLE, true);
-                testRooms.add(room);
-                AdminResource.addRoom(testRooms);
+                if(!testRooms.contains(room)) {
+                    testRooms.add(room);
+                }
             }
-        } 
+        }
+        AdminResource.addRoom(testRooms);
     }
     public static void addTestCustomers() {
         var names = List.of("Jeff", "Todd", "Clare", "Ashley", "Pasq");
@@ -126,7 +139,7 @@ public class AdminMenu {
             Date checkOut = new SimpleDateFormat("MM-dd-yyyy").parse(checkOutDate);
             for(Customer customer:customers) {
                 for (IRoom room : rooms) {
-                    HotelResource.bookARoom(customer.getEmail(), room, checkIn, checkOut);
+                        bookARoom(customer.getEmail(), room, checkIn, checkOut);
                 }
             }
         }

@@ -44,6 +44,6 @@ public class Customer{
   }
   @Override
   public String toString(){
-    return "model.Customer: " + firstName + " " + lastName + " " + email;
+    return "Customer: " + firstName + " " + lastName + " " + email;
   }
 }

@@ -1,6 +1,7 @@
 package menu;
 
 import api.HotelResource;
+import model.Reservation;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -65,33 +66,32 @@ public class MainMenu {
 
         public static void findARoom() {
             try{
-            Scanner dates = new Scanner(System.in);
-            System.out.println("Enter check-in date: mm-dd-yyyy");
-            String checkInDate = dates.nextLine();
-            System.out.println("Check-in Date: " + checkInDate);
-            Date checkIn = new SimpleDateFormat("MM-dd-yyyy").parse(checkInDate);
-            System.out.println("Enter check-out date: mm-dd-yyyy");
-            String checkOutDate = dates.nextLine();
-            System.out.println("Check-out Date: " + checkOutDate);
-            Date checkOut = new SimpleDateFormat("MM-dd-yyyy").parse(checkOutDate);
-            System.out.println("Will this room be free? Y or N");
-            String cost = dates.nextLine();
-                switch (cost) {
-                    case "Y":
-                        boolean isFree = false;
-                        break;
-                    case "N":
-                        isFree = true;
-                        break;
-                    default:
-                        System.out.println("Input incorrect. \nPlease enter Y or N");
-                }
+                Scanner dates = new Scanner(System.in);
+                System.out.println("Enter check-in date: mm-dd-yyyy");
+                String checkInDate = dates.nextLine();
+                System.out.println("Check-in Date: " + checkInDate);
+                Date checkIn = new SimpleDateFormat("MM-dd-yyyy").parse(checkInDate);
+                System.out.println("Enter check-out date: mm-dd-yyyy");
+                String checkOutDate = dates.nextLine();
+                System.out.println("Check-out Date: " + checkOutDate);
+                Date checkOut = new SimpleDateFormat("MM-dd-yyyy").parse(checkOutDate);
+                System.out.println("Will this room be free? Y or N");
+                String cost = dates.nextLine();
+                    switch (cost) {
+                        case "Y":
+                            boolean isFree = true;
+                            break;
+                        case "N":
+                            isFree = false;
+                            break;
+                        default:
+                            System.out.println("Input incorrect. \nPlease enter Y or N");
+                    }
             }
             catch (Exception e) {
                 System.out.println(e);
                 System.err.println("Input incorrect. \nPlease enter Y or N");
             }
-            findARoom();
             System.out.println("Book a room? Y or N");
             Scanner book = new Scanner(System.in);
             String reserve = book.nextLine();
@@ -128,7 +128,11 @@ public class MainMenu {
             System.out.println("Enter customer email: ");
             String customerEmail = email.nextLine();
             System.out.println("Customer email: " + customerEmail);
-            getAllCustomerReservations(customerEmail);
+            for(Reservation reservation: getAllCustomerReservations(customerEmail)){
+                if(reservation.getCustomer().equals(customerEmail)) {
+                    System.out.println(reservation);
+                }
+            }
         }
 
         public static void createCustomer() {
