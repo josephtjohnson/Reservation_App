@@ -7,7 +7,6 @@ public class Reservation {
   private IRoom room;
   private Date checkInDate;
   private Date checkOutDate;
-  private boolean isFree;
 
   public Reservation(Customer customer, IRoom room, Date checkInDate, Date checkOutDate) {
     this.customer = customer;
@@ -15,26 +14,13 @@ public class Reservation {
     this.checkInDate = checkInDate;
     this.checkOutDate = checkOutDate;
   }
-  public Customer getCustomer() {
+  public Customer getCustomer() { return customer; }
 
-    return customer;
-  }
-  public IRoom getRoom() {
+  public IRoom getRoom() { return room; }
 
-    return room;
-  }
-  public Date getCheckInDate() {
+  public Date getCheckInDate() { return checkInDate; }
 
-    return checkInDate;
-  }
-  public Date getCheckOutDate(){
-
-    return checkOutDate;
-  }
-  public boolean getIsFree(){
-    
-    return isFree;
-    }
+  public Date getCheckOutDate() { return checkOutDate; }
 
   @Override
   public String toString() {
