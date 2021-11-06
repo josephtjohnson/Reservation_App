@@ -78,6 +78,6 @@ public class Customer{
   }
   @Override
   public String toString(){
-    return "Customer Account Information: " + firstName + " " + lastName + " " + email;
+    return firstName + " " + lastName + " " + email;
   }
 }
