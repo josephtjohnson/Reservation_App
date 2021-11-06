@@ -4,7 +4,7 @@ public class Room implements IRoom{
     private final String roomNumber;
     private final Double roomPrice;
     private final RoomType roomType;
-    public boolean isFree;
+    private final  boolean isFree;
 
     public Room(String roomNumber, Double roomPrice, RoomType roomType, boolean isFree){
         this.roomNumber = roomNumber;
