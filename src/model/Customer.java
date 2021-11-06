@@ -13,7 +13,41 @@ public class Customer{
     String emailRegex = "^(.+)@(.+).(.+)$";
     Pattern pattern = Pattern.compile(emailRegex);
     this.firstName = firstName;
+    while (keepRunning){
+      if(firstName != null) {
+        keepRunning = false;
+      }
+      else {
+        try {
+          throw new IllegalArgumentException("First name cannot be empty. ");
+        }
+        catch(IllegalArgumentException e) {
+          System.out.println(e + "\nPlease enter a customer first name. ");
+          Scanner scanner = new Scanner(System.in);
+          String input = scanner.next();
+          firstName = input;
+        }
+      }
+    }
+    keepRunning = true;
     this.lastName = lastName;
+    while (keepRunning){
+      if(lastName != null) {
+        keepRunning = false;
+      }
+      else {
+        try {
+          throw new IllegalArgumentException("Last name cannot be empty. ");
+        }
+        catch(IllegalArgumentException e) {
+          System.out.println(e + "\nPlease enter a customer last name. ");
+          Scanner scanner = new Scanner(System.in);
+          String input = scanner.next();
+          lastName = input;
+        }
+      }
+    }
+    keepRunning = true;
     this.email = email;
     while (keepRunning){
         if(pattern.matcher(this.email).matches()) {
@@ -24,7 +58,7 @@ public class Customer{
             throw new IllegalArgumentException("Invalid email format (ex. j@email.com). ");
           }
           catch(IllegalArgumentException e) {
-            System.out.println(e + "Please enter a valid email address: ");
+            System.out.println(e + "\nPlease enter a valid email address: ");
             Scanner scanner = new Scanner(System.in);
             String input = scanner.next();
             this.email = input;
