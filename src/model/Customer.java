@@ -31,7 +31,7 @@ public class Customer{
           }
         }
     }
-    System.out.println("model.Customer information saved.");
+    System.out.println("Customer information saved.");
   }
   public String getFirstName() {
     return firstName;
@@ -44,6 +44,6 @@ public class Customer{
   }
   @Override
   public String toString(){
-    return "Customer: " + firstName + " " + lastName + " " + email;
+    return "Customer Account Information: " + firstName + " " + lastName + " " + email;
   }
 }
