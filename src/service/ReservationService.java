@@ -50,7 +50,7 @@ public class ReservationService {
                     && reservation.getRoom().equals(room))) {
                     tempRoomList.remove(room);
                 }
-                if(reservation.getIsFree() != isFree) {
+                if(room.isFree() != isFree) {
                     tempRoomList.remove(room);
                 }
             }
