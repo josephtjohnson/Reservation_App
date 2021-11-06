@@ -1,5 +1,6 @@
 package model;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -25,6 +26,6 @@ public class Reservation {
 
   @Override
   public String toString() {
-    return "Reservation: \n"+ customer + " \n" + room + " " + "\nDates: " + checkInDate + "-\n" + checkOutDate;
+    return "Reservation: \n"+ customer + " \n" + room + " " + "\nDates: \n" + checkInDate + " -\n" + checkOutDate;
   }
 }
