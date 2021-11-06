@@ -10,6 +10,7 @@ public class Room implements IRoom{
         this.roomNumber = roomNumber;
         this.roomPrice = roomPrice;
         this.roomType = roomType;
+        this.isFree = false;
     }
 
     @Override
