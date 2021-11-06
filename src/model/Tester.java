@@ -3,7 +3,6 @@ package model;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Scanner;
 
 public class Tester {
 
@@ -37,14 +36,9 @@ public class Tester {
   public static void testReservation() throws ParseException {
     Customer customer5 = new Customer("John","Holiday","jholiday@test.com");
     Room room4 = new Room("201", 100.0, IRoom.RoomType.SINGLE, false);
-    Scanner scanner = new Scanner(System.in);
-    System.out.println("Please enter check in date. mm/dd/yyyy");
-    String checkIn = scanner.next();
-    Date checkInDate = new SimpleDateFormat("MM/dd/yyyy").parse(checkIn);
-    System.out.println("Please enter check out date. mm/dd/yyyy");
-    String checkOut = scanner.next();
-    Date checkOutDate = new SimpleDateFormat("MM/dd/yyyy").parse(checkOut);
-    Reservation reservation = new Reservation(customer5, room4, checkInDate,checkOutDate);
+    Date checkInDate = new SimpleDateFormat("MM-dd-yyyy").parse("11-06-2021");
+    Date checkOutDate = new SimpleDateFormat("MM-dd-yyyy").parse("11-06-2021");
+    Reservation reservation = new Reservation(customer5, room4, checkInDate, checkOutDate);
     System.out.println(reservation);
   }
 
