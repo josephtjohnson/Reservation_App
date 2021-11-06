@@ -3,12 +3,14 @@ package service;
 import model.Customer;
 import model.IRoom;
 import model.Reservation;
+import model.Room;
+
 import java.util.*;
 
 public class ReservationService {
     private static ReservationService reservationService;
-    public Collection<Reservation> reservations = new HashSet<>();
-    public Collection<IRoom> roomList = new ArrayList<>();
+    public static Collection<Reservation> reservations = new HashSet<>();
+    public static Collection<IRoom> roomList = new ArrayList<>();
     public static ReservationService getInstance() {
         if (null == reservationService) {
             reservationService = new ReservationService();
@@ -29,36 +31,38 @@ public class ReservationService {
         System.out.println("Room not found. Please verify room number and try again.");
         return null;
     }
-    public Collection<IRoom> getRooms(){
+    public static Collection<IRoom> getRooms(){
         return roomList;
     }
     public void reserveARoom(Customer customer, IRoom room, Date checkInDate, Date checkOutDate) {
     Reservation reservation = new Reservation(customer, room, checkInDate, checkOutDate);
     reservations.add(reservation);
     }
-    public Collection<IRoom> findRooms(Date checkInDate, Date checkOutDate, boolean isFree){
-        List<IRoom> tempRoomList = new ArrayList<>(roomList);
+    public static void findRooms(Date checkInDate, Date checkOutDate, boolean isFree){
         for (Reservation reservation : reservations) {
-            for (IRoom room : tempRoomList) {
+            for (model.IRoom room : getRooms()) {
                 if((reservation.getCheckInDate().before(checkInDate)
                     && reservation.getCheckOutDate().after(checkOutDate)
                     && reservation.getRoom().equals(room))
+                    && room.isFree() == true
                     || (reservation.getCheckInDate().after(checkInDate)
                     && reservation.getCheckOutDate().before(checkOutDate)
-                    && reservation.getRoom().equals(room))) {
-                    tempRoomList.remove(room);
+                    && reservation.getRoom().equals(room))
+                    && room.isFree() == true) {
+                    System.out.println(room);
                 }
-                if(room.isFree() != isFree) {
-                    tempRoomList.remove(room);
+                else {
+                    System.out.println("No rooms available");
                 }
+                }
+            System.out.println("Room search complete");
             }
         }
-        return tempRoomList;
-    }
-    public Collection<Reservation> getCustomersReservation(Customer customer) {
+    public static Collection<Reservation> getCustomersReservation(Customer customer) {
         Collection<Reservation> customerReservations = new ArrayList<>();
+        Collection<Customer> customers = new ArrayList<>(CustomerService.getCustomers());
         for (Reservation reservation : reservations){
-            if(reservation.getCustomer().equals(customer)) {
+            if(reservation.getCustomer().getEmail().equals(customer.getEmail())) {
                 customerReservations.add(reservation);
             }
             return customerReservations;

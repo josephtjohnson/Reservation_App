@@ -14,11 +14,11 @@ public class CustomerService {
         }
         return customerService;
     }
-    public void addCustomer(String email, String firstName, String lastName) {
+    public static void addCustomer(String email, String firstName, String lastName) {
         Customer customer = new Customer(firstName, lastName, email);
         customers.add(customer);
     }
-    public Customer getCustomer(String customerEmail) {
+    public static Customer getCustomer(String customerEmail) {
         for (Customer customer : customers) {
             if(customer.getEmail().equalsIgnoreCase(customerEmail)) {
                 return customer;
@@ -27,7 +27,7 @@ public class CustomerService {
         System.out.println("Customer does not exist");
         return null;
     }
-    public Collection<Customer> getCustomers(){
+    public static Collection<Customer> getCustomers(){
         return customers;
     }
 

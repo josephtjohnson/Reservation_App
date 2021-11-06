@@ -1,9 +1,15 @@
 package menu;
 
 import api.HotelResource;
+import model.Customer;
+import model.IRoom;
 import model.Reservation;
+import service.CustomerService;
+import service.ReservationService;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.Scanner;
 
@@ -65,30 +71,32 @@ public class MainMenu {
         }
 
         public static void findARoom() {
-            try{
+            Date checkIn = null;
+            Date checkOut = null;
+            boolean isFree = false;
+            try {
                 Scanner dates = new Scanner(System.in);
                 System.out.println("Enter check-in date: mm-dd-yyyy");
                 String checkInDate = dates.nextLine();
                 System.out.println("Check-in Date: " + checkInDate);
-                Date checkIn = new SimpleDateFormat("MM-dd-yyyy").parse(checkInDate);
+                checkIn = new SimpleDateFormat("MM-dd-yyyy").parse(checkInDate);
                 System.out.println("Enter check-out date: mm-dd-yyyy");
                 String checkOutDate = dates.nextLine();
                 System.out.println("Check-out Date: " + checkOutDate);
-                Date checkOut = new SimpleDateFormat("MM-dd-yyyy").parse(checkOutDate);
+                checkOut = new SimpleDateFormat("MM-dd-yyyy").parse(checkOutDate);
                 System.out.println("Will this room be free? Y or N");
                 String cost = dates.nextLine();
-                    switch (cost) {
-                        case "Y":
-                            boolean isFree = true;
-                            break;
-                        case "N":
-                            isFree = false;
-                            break;
-                        default:
-                            System.out.println("Input incorrect. \nPlease enter Y or N");
-                    }
-            }
-            catch (Exception e) {
+                switch (cost) {
+                    case "Y":
+                        isFree = true;
+                        break;
+                    case "N":
+                        isFree = false;
+                        break;
+                    default:
+                        System.out.println("Input incorrect. \nPlease enter Y or N");
+                }
+            } catch (Exception e) {
                 System.out.println(e);
                 System.err.println("Input incorrect. \nPlease enter Y or N");
             }
@@ -98,39 +106,39 @@ public class MainMenu {
             try {
                 switch (reserve) {
                     case "Y":
-                        System.out.println("Enter customer email");
-                        String customerEmail = book.nextLine();
+                        System.out.println("Here are all available hotel rooms");
+                        HotelResource.findARoom(checkIn, checkOut, isFree);
                         System.out.println("Enter room number");
                         String roomNumber = book.nextLine();
-                        System.out.println("Enter check in date mm-dd-yyy");
-                        String checkInDate2 = book.nextLine();
-                        Date checkIn2 = new SimpleDateFormat("MM-dd-yyyy").parse(checkInDate2);
-                        System.out.println("Enter check out date mm-dd-yyyy");
-                        String checkOutDate2 = book.nextLine();
-                        Date checkOut2 = new SimpleDateFormat("MM-dd-yyyy").parse(checkOutDate2);
-                        HotelResource.bookARoom(customerEmail, HotelResource.getRoom(roomNumber), checkIn2, checkOut2);
-                        System.out.println("Room reserved!");
+                        System.out.println("Enter customer email");
+                        String customerEmail = book.nextLine();
+                        HotelResource.bookARoom(customerEmail, HotelResource.getRoom(roomNumber), checkIn, checkOut);
                         break;
                     case "N":
                         break;
                     default:
                         System.out.println("Input incorrect. \nPlease enter Y or N");
                 }
-            }
-            catch (Exception e) {
+                System.out.println("Room reserved!");
+            } catch (Exception e) {
                 System.out.println(e);
                 System.err.println("Input incorrect. \nPlease enter Y or N");
             }
         }
 
         public static void getCustomerReservations() {
+            Collection<Customer> customerList = new ArrayList<>(HotelResource.getAllCustomers());
             Scanner email = new Scanner(System.in);
             System.out.println("Enter customer email: ");
             String customerEmail = email.nextLine();
-            System.out.println("Customer email: " + customerEmail);
-            for(Reservation reservation: getAllCustomerReservations(customerEmail)){
-                if(reservation.getCustomer().equals(customerEmail)) {
-                    System.out.println(reservation);
+            for(Customer customer:customerList){
+                for(Reservation reservation:getAllCustomerReservations(customer)) {
+                    if (customer.equals(HotelResource.retrieveCustomer(customerEmail))) {
+                        System.out.println(reservation);
+                    }
+                    else {
+                        System.out.println("Could not find customer reservations.");
+                    }
                 }
             }
         }
