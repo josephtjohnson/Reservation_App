@@ -8,10 +8,7 @@ import service.CustomerService;
 import service.ReservationService;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.Scanner;
+import java.util.*;
 
 import static api.HotelResource.*;
 
@@ -86,7 +83,7 @@ public class MainMenu {
                 checkOut = new SimpleDateFormat("MM-dd-yyyy").parse(checkOutDate);
                 System.out.println("Will this room be free? Y or N");
                 String cost = dates.nextLine();
-                switch (cost) {
+                switch (cost.toUpperCase()) {
                     case "Y":
                         isFree = true;
                         break;
@@ -104,7 +101,7 @@ public class MainMenu {
             Scanner book = new Scanner(System.in);
             String reserve = book.nextLine();
             try {
-                switch (reserve) {
+                switch (reserve.toUpperCase()) {
                     case "Y":
                         System.out.println("Here are all available hotel rooms");
                         HotelResource.findARoom(checkIn, checkOut, isFree);
