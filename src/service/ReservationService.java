@@ -3,7 +3,6 @@ package service;
 import model.Customer;
 import model.IRoom;
 import model.Reservation;
-import model.Room;
 
 import java.util.*;
 
@@ -38,24 +37,22 @@ public class ReservationService {
     Reservation reservation = new Reservation(customer, room, checkInDate, checkOutDate, isFree);
     reservations.put(customer.getFirstName() + " " + customer.getLastName(), reservation);
     }
-    public static void findRooms(Date checkInDate, Date checkOutDate){
-        for (Reservation value: reservations.values()) {
-            for (model.IRoom room : getRooms()) {
-                if((value.getCheckInDate().before(checkInDate)
-                    && value.getCheckOutDate().after(checkOutDate)
-                    && value.getRoom().equals(room))
-                    || (value.getCheckInDate().after(checkInDate)
-                    && value.getCheckOutDate().before(checkOutDate)
-                    && value.getRoom().equals(room))) {
-                    System.out.println(room);
-                }
-                else {
-                    System.out.println("No rooms available");
-                }
-                }
-            System.out.println("Room search complete");
+    static boolean dateInRange(Date checkInDate, Date checkOutDate, Reservation reservation) {
+        return checkInDate.before(reservation.getCheckOutDate()) || checkOutDate.after(reservation.getCheckInDate());
+    }
+    public static void findARoom(Date checkInDate, Date checkOutDate) {
+        Collection<IRoom> rooms = getRooms();
+        for (Reservation value : reservations.values()) {
+            if (dateInRange(checkInDate, checkOutDate, value)) {
+                rooms.remove(value.getRoom());
             }
         }
+        Collection<IRoom> availableRooms = rooms.stream().toList();
+        for (IRoom room:availableRooms) {
+            System.out.println(room);
+        }
+    }
+
     public static Collection<Collection> getCustomersReservation(Customer customer) {
         Collection<Collection> customerReservations = new ArrayList<>();
         for (String key : reservations.keySet()){
@@ -68,7 +65,7 @@ public class ReservationService {
         return null;
     }
     public void printAllReservations() {
-        reservations.forEach((key, value) -> System.out.println("\nCustomer Name: "+ key + "\n" + value));
+        reservations.forEach((key, value) -> System.out.println("\nCustomer Name: "+ key + value));
         }
     }
 
