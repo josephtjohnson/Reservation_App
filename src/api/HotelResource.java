@@ -7,7 +7,6 @@ import service.ReservationService;
 import java.util.Collection;
 import java.util.Date;
 import static service.CustomerService.*;
-import static service.ReservationService.findRooms;
 import static service.ReservationService.getCustomersReservation;
 
 public class HotelResource {
@@ -42,6 +41,6 @@ public class HotelResource {
         return getCustomersReservation(customer);
     }
     public static void findARoom(Date checkInDate, Date checkOutDate) {
-        findRooms(checkInDate, checkOutDate);
+        ReservationService.findARoom(checkInDate, checkOutDate);
     }
 }
