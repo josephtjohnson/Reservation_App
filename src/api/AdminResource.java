@@ -8,8 +8,13 @@ import service.CustomerService;
 import service.ReservationService;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+
+import static service.CustomerService.getCustomers;
+import static service.ReservationService.getRooms;
+import static service.ReservationService.reservations;
 
 public class AdminResource {
     private static AdminResource adminResource = null;
@@ -24,7 +29,7 @@ public class AdminResource {
         return adminResource;
     }
     public Customer getCustomer(String email){
-        return customerService.getCustomer(email);
+        return CustomerService.getCustomer(email);
     }
     public static void addRoom(List<IRoom> rooms){
         for (IRoom room : rooms) {
@@ -32,12 +37,11 @@ public class AdminResource {
         }
     }
     public static Collection<IRoom> getAllRooms(){
-        return reservationService.getRooms();
+        return getRooms();
     }
     public static Collection<Customer> getAllCustomers(){
-        return customerService.getCustomers();
+        return getCustomers();
     }
-    public static Collection<Reservation> getAllReservations() { return reservationService.reservations;}
     public static void displayAllReservations(){
         reservationService.printAllReservations();
     }
