@@ -2,15 +2,13 @@ package api;
 
 import model.Customer;
 import model.IRoom;
-import model.Reservation;
-import model.Room;
 import service.CustomerService;
 import service.ReservationService;
 import java.util.Collection;
 import java.util.Date;
-
 import static service.CustomerService.*;
 import static service.ReservationService.findRooms;
+import static service.ReservationService.getCustomersReservation;
 
 public class HotelResource {
     private static final HotelResource hotelResource = null;
@@ -37,13 +35,13 @@ public class HotelResource {
         return reservationService.getARoom(roomNumber);
     }
 
-    public static void bookARoom(String customerEmail, IRoom room, Date checkInDate, Date checkOutDate) {
-        reservationService.reserveARoom(getCustomer(customerEmail), room, checkInDate, checkOutDate);
+    public static void bookARoom(String customerEmail, IRoom room, Date checkInDate, Date checkOutDate, boolean isFree) {
+        reservationService.reserveARoom(getCustomer(customerEmail), room, checkInDate, checkOutDate, isFree);
     }
-    public static Collection<Reservation> getAllCustomerReservations(Customer customer) {
-        return reservationService.getCustomersReservation(customer);
+    public static Collection<Collection> getAllCustomerReservations(Customer customer) {
+        return getCustomersReservation(customer);
     }
-    public static void findARoom(Date checkInDate, Date checkOutDate, boolean isFree) {
-        findRooms(checkInDate, checkOutDate, isFree);
+    public static void findARoom(Date checkInDate, Date checkOutDate) {
+        findRooms(checkInDate, checkOutDate);
     }
 }
