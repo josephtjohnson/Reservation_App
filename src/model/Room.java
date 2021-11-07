@@ -31,6 +31,6 @@ public class Room implements IRoom{
 
     @Override
     public String toString() {
-        return "--Room Number: " + roomNumber  + " --Price: " + roomPrice + " --Type: " + roomType;
+        return "Room: " + roomNumber  + " Price: " + roomPrice + " Type: " + roomType;
     }
 }
