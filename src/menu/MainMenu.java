@@ -23,7 +23,7 @@ public class MainMenu {
         Scanner scanner = new Scanner(System.in);
         while (keepRunning) {
             try {
-                System.out.println("Please select one of the following options");
+                System.out.println("\nPlease select one of the following options");
                 System.out.println("1. Find and reserve a room");
                 System.out.println("2. See my reservation");
                 System.out.println("3. Create an account");
@@ -37,22 +37,27 @@ public class MainMenu {
 
                     case 1:
                         findARoom();
+                        System.out.println("\n");
                         break;
 
                     case 2:
                         getCustomerReservations();
+                        System.out.println("\n");
                         break;
 
                     case 3:
                         createCustomer();
+                        System.out.println("\n");
                         break;
 
                     case 4:
                         AdminMenu.adminMenu();
+                        System.out.println("\n");
                         break;
 
                     case 5:
                         System.out.println("Application will now close");
+                        System.out.println("\n");
                         keepRunning = false;
                         break;
 
@@ -104,19 +109,19 @@ public class MainMenu {
                 switch (reserve.toUpperCase()) {
                     case "Y":
                         System.out.println("Here are all available hotel rooms");
-                        HotelResource.findARoom(checkIn, checkOut, isFree);
+                        HotelResource.findARoom(checkIn, checkOut);
                         System.out.println("Enter room number");
                         String roomNumber = book.nextLine();
                         System.out.println("Enter customer email");
                         String customerEmail = book.nextLine();
-                        HotelResource.bookARoom(customerEmail, HotelResource.getRoom(roomNumber), checkIn, checkOut);
+                        HotelResource.bookARoom(customerEmail, HotelResource.getRoom(roomNumber), checkIn, checkOut, isFree);
+                        System.out.println("Room reserved!");
                         break;
                     case "N":
                         break;
                     default:
                         System.out.println("Input incorrect. \nPlease enter Y or N");
                 }
-                System.out.println("Room reserved!");
             } catch (Exception e) {
                 System.out.println(e);
                 System.err.println("Input incorrect. \nPlease enter Y or N");
@@ -129,7 +134,7 @@ public class MainMenu {
             System.out.println("Enter customer email: ");
             String customerEmail = email.nextLine();
             for(Customer customer:customerList){
-                for(Reservation reservation:getAllCustomerReservations(customer)) {
+                for(Collection reservation:getAllCustomerReservations(customer)) {
                     if (customer.equals(HotelResource.retrieveCustomer(customerEmail))) {
                         System.out.println(reservation);
                     }
