@@ -135,11 +135,13 @@ public class AdminMenu {
             List<IRoom> rooms = new ArrayList<>(AdminResource.getAllRooms());
             String checkInDate = "01-01-2021";
             Date checkIn = new SimpleDateFormat("MM-dd-yyyy").parse(checkInDate);
-            String checkOutDate = "01-01-2021";
+            String checkOutDate = "01-02-2021";
             Date checkOut = new SimpleDateFormat("MM-dd-yyyy").parse(checkOutDate);
-            for(Customer customer:customers) {
-                for (IRoom room : rooms) {
+            for (IRoom room : rooms) {
+                 for (Customer customer:customers){
                         bookARoom(customer.getEmail(), room, checkIn, checkOut);
+                        checkIn = addDays(checkIn, 2);
+                        checkOut = addDays(checkOut, 2);
                 }
             }
         }
@@ -147,5 +149,11 @@ public class AdminMenu {
             System.out.println(e);
             System.out.println("Test Reservations not created");
         }
+    }
+    public static Date addDays(Date date, int days) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.add(Calendar.DATE, days); //minus number would decrement the days
+        return cal.getTime();
     }
 }
