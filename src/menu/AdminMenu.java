@@ -35,31 +35,38 @@ public class AdminMenu {
                 switch (selection) {
                     case 1:
                         customerList();
+                        System.out.println("\n");
                         break;
                     case 2:
                         roomList();
+                        System.out.println("\n");
                         break;
                     case 3:
                         displayAllReservations();
+                        System.out.println("\n");
                         break;
                     case 4:
                         addRooms();
+                        System.out.println("\n");
+                        break;
                     case 5:
                         addTestRooms();
                         addTestCustomers();
                         addTestReservations();
                         System.out.println("Test data created");
+                        System.out.println("\n");
                         break;
                     case 6:
                         MainMenu.menu();
+                        System.out.println("\n");
                         break;                
                     default:
-                        System.out.println("Input incorrect. \nPlease enter a number 1 through 5");
+                        System.out.println("\nInput incorrect. \nPlease enter a number 1 through 5");
                 }
             }
             catch(Exception e) {
                 System.out.println(e);
-                System.out.println("Input incorrect. \nPlease enter a number 1 through 5");
+                System.out.println("\nInput incorrect. \nPlease enter a number 1 through 5");
             }
         }
     }
@@ -75,7 +82,7 @@ public class AdminMenu {
             System.out.println(room);
         }
     }
-    public static void addRooms(){
+    public static void addRooms() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Please enter a room number");
         String roomNumber = scanner.nextLine();
@@ -84,7 +91,7 @@ public class AdminMenu {
         System.out.println("Please enter a room type : (1) => SINGLE, (2) => DOUBLE");
         String roomTypeInput = scanner.nextLine();
         IRoom.RoomType roomType = null;
-        switch (roomTypeInput){
+        switch (roomTypeInput) {
             case "1":
                 roomType = IRoom.RoomType.SINGLE;
                 break;
@@ -94,8 +101,21 @@ public class AdminMenu {
             default:
                 System.out.println("Please enter a valid room type (1 or 2)");
         }
+        System.out.println("Will this room be free? Y or N");
+        String cost = scanner.nextLine();
+        IRoom room = null;
+        switch (cost.toUpperCase()) {
+            case "Y":
+                room = new FreeRoom(roomNumber, roomPrice, roomType, true);
+                break;
+            case "N":
+                room = new Room(roomNumber, roomPrice, roomType, false);
+                break;
+            default:
+                System.out.println("Input incorrect. \nPlease enter Y or N");
+        }
+
         List<IRoom> newRooms = new ArrayList<>();
-        IRoom room = new Room(roomNumber, roomPrice, roomType, false);
         newRooms.add(room);
         AdminResource.addRoom(newRooms);
     }
@@ -139,7 +159,7 @@ public class AdminMenu {
             Date checkOut = new SimpleDateFormat("MM-dd-yyyy").parse(checkOutDate);
             for (IRoom room : rooms) {
                  for (Customer customer:customers){
-                        bookARoom(customer.getEmail(), room, checkIn, checkOut);
+                        bookARoom(customer.getEmail(), room, checkIn, checkOut, room.isFree());
                         checkIn = addDays(checkIn, 2);
                         checkOut = addDays(checkOut, 2);
                 }
