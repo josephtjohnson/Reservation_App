@@ -5,16 +5,18 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Reservation {
-  private Customer customer;
-  private IRoom room;
-  private Date checkInDate;
-  private Date checkOutDate;
+  private final Customer customer;
+  private final IRoom room;
+  private final Date checkInDate;
+  private final Date checkOutDate;
+  private final boolean isFree;
 
-  public Reservation(Customer customer, IRoom room, Date checkInDate, Date checkOutDate) {
+  public Reservation(Customer customer, IRoom room, Date checkInDate, Date checkOutDate, boolean isFree) {
     this.customer = customer;
     this.room = room;
     this.checkInDate = checkInDate;
     this.checkOutDate = checkOutDate;
+    this.isFree = isFree;
   }
   public Customer getCustomer() { return customer; }
 
@@ -24,8 +26,10 @@ public class Reservation {
 
   public Date getCheckOutDate() { return checkOutDate; }
 
+  public boolean getIsFree() { return isFree; }
+
   @Override
   public String toString() {
-    return "Reservation: \n"+ customer + " \n" + room + " " + "\nDates: \n" + checkInDate + " -\n" + checkOutDate;
+    return "Reservation: \n"+ customer + " \n" + room + " " + "\nDates: " + checkInDate + " - " + checkOutDate;
   }
 }
