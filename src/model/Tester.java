@@ -37,9 +37,14 @@ public class Tester {
     Customer customer5 = new Customer("John","Holiday","jholiday@test.com");
     Room room4 = new Room("201", 100.0, IRoom.RoomType.SINGLE, false);
     Date checkInDate = new SimpleDateFormat("MM-dd-yyyy").parse("11-06-2021");
-    Date checkOutDate = new SimpleDateFormat("MM-dd-yyyy").parse("11-06-2021");
-    Reservation reservation = new Reservation(customer5, room4, checkInDate, checkOutDate);
+    Date checkOutDate = new SimpleDateFormat("MM-dd-yyyy").parse("11-07-2021");
+    Reservation reservation = new Reservation(customer5, room4, checkInDate, checkOutDate, room4.isFree());
+    Room room5 = new FreeRoom("201", 100.0, IRoom.RoomType.SINGLE, true);
+    Date checkInDate2 = new SimpleDateFormat("MM-dd-yyyy").parse("11-08-2021");
+    Date checkOutDate2 = new SimpleDateFormat("MM-dd-yyyy").parse("11-09-2021");
+    Reservation reservation2 = new Reservation(customer5, room5, checkInDate2, checkOutDate2, room5.isFree());
     System.out.println(reservation);
+    System.out.println(reservation2);
   }
 
 }
