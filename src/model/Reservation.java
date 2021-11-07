@@ -30,6 +30,6 @@ public class Reservation {
 
   @Override
   public String toString() {
-    return "Reservation: \n"+ customer + " \n" + room + " " + "\nDates: " + checkInDate + " - " + checkOutDate;
+    return "\nReservation: " + customer + room + " " + "Dates: " + checkInDate + " - " + checkOutDate;
   }
 }
