@@ -10,6 +10,7 @@ import java.util.*;
 import static api.AdminResource.getAllRooms;
 import static api.HotelResource.bookARoom;
 import static api.HotelResource.getAllCustomerReservations;
+import static service.CustomerService.getCustomer;
 
 public class ReservationService {
     private static ReservationService reservationService;
@@ -26,7 +27,7 @@ public class ReservationService {
         roomList.add(room);
     }
 
-    public IRoom getARoom(String roomId){
+    public static IRoom getARoom(String roomId){
         for(IRoom room : roomList){
             if(room.getRoomNumber().equals(roomId)){
                 return room;
@@ -38,7 +39,7 @@ public class ReservationService {
     public static Collection<IRoom> getRooms(){
         return roomList;
     }
-    public void reserveARoom(Customer customer, IRoom room, Date checkInDate, Date checkOutDate, boolean isFree) {
+    public static void reserveARoom(Customer customer, IRoom room, Date checkInDate, Date checkOutDate, boolean isFree) {
     Reservation reservation = new Reservation(customer, room, checkInDate, checkOutDate, isFree);
     reservations.put(customer.getFirstName() + " " + customer.getLastName(), reservation);
     }
@@ -120,12 +121,12 @@ public class ReservationService {
             switch (reserve.toUpperCase()) {
                 case "Y":
                     System.out.println("Here are all available hotel rooms");
-                    HotelResource.findARoom(checkIn, checkOut);
+                    findARoom(checkIn, checkOut);
                     System.out.println("Enter room number");
                     String roomNumber = book.nextLine();
                     System.out.println("Enter customer email");
                     String customerEmail = book.nextLine();
-                    HotelResource.bookARoom(customerEmail, HotelResource.getRoom(roomNumber), checkIn, checkOut, isFree);
+                    reserveARoom(getCustomer(customerEmail), getARoom(roomNumber), checkIn, checkOut, isFree);
                     System.out.println("Room reserved!");
                     break;
                 case "N":
