@@ -15,32 +15,49 @@ public class HotelResource {
     public static final ReservationService reservationService = ReservationService.getInstance();
 
     public static HotelResource getInstance() {
-        if(null == hotelResource){
+        if (null == hotelResource) {
             HotelResource hotelResource = new HotelResource();
         }
         return hotelResource;
     }
 
-    public static Customer retrieveCustomer(String email) { return getCustomer(email);
+    public static Customer retrieveCustomer(String email) {
+        return getCustomer(email);
     }
 
-    public static Collection<Customer> getAllCustomers() {return getCustomers();}
+    public static Collection<Customer> getAllCustomers() {
+        return getCustomers();
+    }
 
     public static void createACustomer(String email, String firstName, String lastName) {
         addCustomer(email, firstName, lastName);
 
     }
-    public static IRoom getRoom(String roomNumber){
+
+    public static IRoom getRoom(String roomNumber) {
         return reservationService.getARoom(roomNumber);
     }
 
     public static void bookARoom(String customerEmail, IRoom room, Date checkInDate, Date checkOutDate, boolean isFree) {
         reservationService.reserveARoom(getCustomer(customerEmail), room, checkInDate, checkOutDate, isFree);
     }
+
     public static Collection<Collection> getAllCustomerReservations(Customer customer) {
         return getCustomersReservation(customer);
     }
+
     public static void findARoom(Date checkInDate, Date checkOutDate) {
         ReservationService.findARoom(checkInDate, checkOutDate);
     }
+
+    public static void createCustomer() {
+        ReservationService.createCustomer();
+    }
+    public static void findARoom() {
+        ReservationService.findARoom();
+    }
+    public static void getCustomerReservations() {
+        ReservationService.getCustomerReservations();
+    }
+
 }
