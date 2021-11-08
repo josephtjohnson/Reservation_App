@@ -1,13 +1,5 @@
 package menu;
 
-import api.HotelResource;
-import model.Customer;
-import model.IRoom;
-import model.Reservation;
-import service.CustomerService;
-import service.ReservationService;
-
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 import static api.HotelResource.*;
@@ -41,7 +33,7 @@ public class MainMenu {
                         break;
 
                     case 2:
-                        getCustomerReservations();
+                        getAllCustomerReservations();
                         System.out.println("\n");
                         break;
 

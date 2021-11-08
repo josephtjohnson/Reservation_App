@@ -2,6 +2,7 @@ package model;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Reservation {
@@ -28,8 +29,10 @@ public class Reservation {
 
   public boolean getIsFree() { return isFree; }
 
+  }
+
   @Override
   public String toString() {
-    return "\nReservation: " + customer + room + " " + "Dates: " + checkInDate + " - " + checkOutDate;
+    return room + " " + "Dates: " + checkInDate + " - " + checkOutDate;
   }
 }

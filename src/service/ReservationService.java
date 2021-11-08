@@ -8,13 +8,11 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 import static api.AdminResource.getAllRooms;
-import static api.HotelResource.bookARoom;
-import static api.HotelResource.getAllCustomerReservations;
 import static service.CustomerService.getCustomer;
 
 public class ReservationService {
     private static ReservationService reservationService;
-    public static HashMap<String,Reservation> reservations = new HashMap<>();
+    public static HashMap<String,ArrayList<Reservation>> reservations = new HashMap<String,ArrayList<Reservation>>();
     public static Collection<IRoom> roomList = new ArrayList<>();
     public static ReservationService getInstance() {
         if (null == reservationService) {
@@ -41,16 +39,21 @@ public class ReservationService {
     }
     public static void reserveARoom(Customer customer, IRoom room, Date checkInDate, Date checkOutDate, boolean isFree) {
     Reservation reservation = new Reservation(customer, room, checkInDate, checkOutDate, isFree);
-    reservations.put(customer.getFirstName() + " " + customer.getLastName(), reservation);
+    reservations.get(customer.getFirstName() + " " + customer.getLastName()).add(reservation);
     }
     static boolean dateInRange(Date checkInDate, Date checkOutDate, Reservation reservation) {
         return checkInDate.before(reservation.getCheckOutDate()) || checkOutDate.after(reservation.getCheckInDate());
     }
     public static void findARoom(Date checkInDate, Date checkOutDate) {
         Collection<IRoom> rooms = getRooms();
-        for (Reservation value : reservations.values()) {
-            if (dateInRange(checkInDate, checkOutDate, value)) {
-                rooms.remove(value.getRoom());
+        Collection<Reservation> allReservations = new ArrayList<Reservation>();
+        ////stuck here - can't currently resolve typecast issue
+        for (ArrayList value : reservations.values()) {
+            allReservations.add(value);
+            for (Reservation reservation : allReservations){
+                if (dateInRange(checkInDate, checkOutDate, reservation)) {
+                    rooms.remove(reservation.getRoom());
+            }
             }
         }
         Collection<IRoom> availableRooms = rooms.stream().toList();
@@ -59,19 +62,25 @@ public class ReservationService {
         }
     }
 
-    public static Collection<Collection> getCustomersReservation(Customer customer) {
+    public static void getCustomersReservation() {
         Collection<Collection> customerReservations = new ArrayList<>();
-        for (String key : reservations.keySet()){
-            if(key.equals(customer.getFullName())) {
-                customerReservations.add(reservations.values());
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter customer Email:" );
+        String email = scanner.next();
+        Customer customer = getCustomer(email);
+        System.out.println(customer.getFullName());
+        Iterator entries = reservations.entrySet().iterator();
+        while(entries.hasNext()){
+            Map.Entry entry = (Map.Entry) entries.next();
+            String key = (String) entry.getKey();
+            Reservation value = (Reservation) entry.getValue();
+            if(key.equalsIgnoreCase(customer.getFullName())) {
+                System.out.println(value);
             }
-            return customerReservations;
         }
-        System.out.println("No reservations found for this guest.");
-        return null;
     }
     public void printAllReservations() {
-        reservations.forEach((key, value) -> System.out.println("\nCustomer Name: "+ key + value));
+        reservations.forEach((key, value) -> System.out.println("\nCustomer Name: "+ key + " " + value));
         }
 
     public static void createCustomer() {
@@ -137,22 +146,6 @@ public class ReservationService {
         } catch (Exception e) {
             System.out.println(e);
             System.err.println("Input incorrect. \nPlease enter Y or N");
-        }
-    }
-    public static void getCustomerReservations() {
-        Collection<Customer> customerList = new ArrayList<>(HotelResource.getAllCustomers());
-        Scanner email = new Scanner(System.in);
-        System.out.println("Enter customer email: ");
-        String customerEmail = email.nextLine();
-        for(Customer customer:customerList){
-            for(Collection reservation:getAllCustomerReservations(customer)) {
-                if (customer.equals(HotelResource.retrieveCustomer(customerEmail))) {
-                    System.out.println(reservation);
-                }
-                else {
-                    System.out.println("Could not find customer reservations.");
-                }
-            }
         }
     }
     public static void roomList() {
@@ -238,7 +231,7 @@ public class ReservationService {
             Date checkOut = new SimpleDateFormat("MM-dd-yyyy").parse(checkOutDate);
             for (IRoom room : rooms) {
                 for (Customer customer:customers){
-                    bookARoom(customer.getEmail(), room, checkIn, checkOut, room.isFree());
+                    reserveARoom(customer, room, checkIn, checkOut, room.isFree());
                     checkIn = addDays(checkIn, 2);
                     checkOut = addDays(checkOut, 2);
                 }

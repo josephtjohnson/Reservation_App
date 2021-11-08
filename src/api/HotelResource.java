@@ -42,8 +42,8 @@ public class HotelResource {
         reservationService.reserveARoom(getCustomer(customerEmail), room, checkInDate, checkOutDate, isFree);
     }
 
-    public static Collection<Collection> getAllCustomerReservations(Customer customer) {
-        return getCustomersReservation(customer);
+    public static void getAllCustomerReservations() {
+        getCustomersReservation();
     }
 
     public static void findARoom(Date checkInDate, Date checkOutDate) {
@@ -56,8 +56,4 @@ public class HotelResource {
     public static void findARoom() {
         ReservationService.findARoom();
     }
-    public static void getCustomerReservations() {
-        ReservationService.getCustomerReservations();
-    }
-
 }
