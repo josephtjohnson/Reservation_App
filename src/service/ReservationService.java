@@ -1,13 +1,14 @@
 package service;
 
+import api.AdminResource;
 import api.HotelResource;
-import model.Customer;
-import model.IRoom;
-import model.Reservation;
+import model.*;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+import static api.AdminResource.getAllRooms;
+import static api.HotelResource.bookARoom;
 import static api.HotelResource.getAllCustomerReservations;
 
 public class ReservationService {
@@ -152,6 +153,106 @@ public class ReservationService {
                 }
             }
         }
+    }
+    public static void roomList() {
+        List<IRoom> rooms = new ArrayList<>(getAllRooms());
+        for(IRoom room:rooms){
+            System.out.println(room);
+        }
+    }
+    public static void addRooms() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Please enter a room number");
+        String roomNumber = scanner.nextLine();
+        System.out.println("Please enter a room price");
+        Double roomPrice = Double.valueOf(scanner.nextLine());
+        System.out.println("Please enter a room type : (1) => SINGLE, (2) => DOUBLE");
+        String roomTypeInput = scanner.nextLine();
+        IRoom.RoomType roomType = null;
+        switch (roomTypeInput) {
+            case "1":
+                roomType = IRoom.RoomType.SINGLE;
+                break;
+            case "2":
+                roomType = IRoom.RoomType.DOUBLE;
+                break;
+            default:
+                System.out.println("Please enter a valid room type (1 or 2)");
+        }
+        System.out.println("Will this room be free? Y or N");
+        String cost = scanner.nextLine();
+        IRoom room = null;
+        switch (cost.toUpperCase()) {
+            case "Y":
+                room = new FreeRoom(roomNumber, roomPrice, roomType, true);
+                break;
+            case "N":
+                room = new Room(roomNumber, roomPrice, roomType, false);
+                break;
+            default:
+                System.out.println("Input incorrect. \nPlease enter Y or N");
+        }
+
+        List<IRoom> newRooms = new ArrayList<>();
+        newRooms.add(room);
+        AdminResource.addRoom(newRooms);
+    }
+    public static void addTestRooms(){
+        List<IRoom> testRooms = new ArrayList<>();
+        for(int i = 1; i < 10; i++) {
+            String roomNumber = String.valueOf(i);
+            if (i % 2 == 0){
+                Double roomPrice = Double.valueOf(i);
+                IRoom room = new Room(roomNumber, roomPrice, IRoom.RoomType.SINGLE, false);
+                if(!testRooms.contains(room)) {
+                    testRooms.add(room);
+                }
+            }
+            else {
+                Double roomPrice = 0.0;
+                IRoom room = new FreeRoom(roomNumber, roomPrice, IRoom.RoomType.DOUBLE, true);
+                if(!testRooms.contains(room)) {
+                    testRooms.add(room);
+                }
+            }
+        }
+        AdminResource.addRoom(testRooms);
+    }
+    public static void addTestCustomers() {
+        var names = List.of("Jeff", "Todd", "Clare", "Ashley", "Pasq");
+        for(String name:names){
+            String customerEmail = name + "@gmail.com";
+            String customerFirstName = name;
+            String customerLastName = "Tester";
+            HotelResource.createACustomer(customerEmail, customerFirstName, customerLastName);
+        }
+    }
+    public static void addTestReservations() {
+        try{
+            List<Customer> customers = new ArrayList<>(AdminResource.getAllCustomers());
+            List<IRoom> rooms = new ArrayList<>(AdminResource.getAllRooms());
+            String checkInDate = "01-01-2021";
+            Date checkIn = new SimpleDateFormat("MM-dd-yyyy").parse(checkInDate);
+            String checkOutDate = "01-02-2021";
+            Date checkOut = new SimpleDateFormat("MM-dd-yyyy").parse(checkOutDate);
+            for (IRoom room : rooms) {
+                for (Customer customer:customers){
+                    bookARoom(customer.getEmail(), room, checkIn, checkOut, room.isFree());
+                    checkIn = addDays(checkIn, 2);
+                    checkOut = addDays(checkOut, 2);
+                }
+            }
+        }
+        catch (Exception e) {
+            System.out.println(e);
+            System.out.println("Test Reservations not created");
+        }
+    }
+    public static Date addDays(Date date, int days) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.add(Calendar.DATE, days); //minus number would decrement the days
+        return cal.getTime();
     }
 }
 

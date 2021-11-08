@@ -7,10 +7,7 @@ import model.Room;
 import service.CustomerService;
 import service.ReservationService;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 import static service.CustomerService.getCustomers;
 import static service.ReservationService.getRooms;
@@ -44,5 +41,19 @@ public class AdminResource {
     }
     public static void displayAllReservations(){
         reservationService.printAllReservations();
+    }
+    public static void customerList() {
+        CustomerService.customerList();
+    }
+    public static void roomList() {
+        ReservationService.roomList();
+    }
+    public static void addRooms() {
+        ReservationService.addRooms();
+    }
+    public static void addTestData() {
+        ReservationService.addTestCustomers();
+        ReservationService.addTestRooms();
+        ReservationService.addTestReservations();
     }
 }

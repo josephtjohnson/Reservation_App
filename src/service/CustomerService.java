@@ -1,8 +1,13 @@
 package service;
 
 import model.Customer;
+
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
+
+import static api.AdminResource.getAllCustomers;
 
 public class CustomerService {
     private static Collection<Customer> customers = new HashSet<Customer>();
@@ -29,6 +34,13 @@ public class CustomerService {
     }
     public static Collection<Customer> getCustomers(){
         return customers;
+    }
+
+    public static void customerList(){
+        List<Customer> customers = new ArrayList<>(getAllCustomers());
+        for(Customer customer:customers){
+            System.out.println(customer);
+        }
     }
 
 }
