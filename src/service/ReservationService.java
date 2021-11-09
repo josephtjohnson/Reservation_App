@@ -37,13 +37,26 @@ public class ReservationService {
     public static Collection<IRoom> getRooms(){
         return roomList;
     }
+    public static boolean isRoomReserved(IRoom room, Date checkInDate, Date checkOutDate) {
+        if(reservations.isEmpty()) { return false; }
+        Collection<Reservation> reservedRooms = new ArrayList<Reservation>();
+        for(ArrayList value : reservations.values()) {
+            reservedRooms.add((Reservation) value);
+        }
+        for (Reservation reservation : reservedRooms) {
+            IRoom reservedRoom = reservation.getRoom();
+            if(room.getRoomNumber().equals(reservedRoom)) {
+                if(checkOutDate.before(reservation.getCheckInDate()) || checkInDate.after(reservation.getCheckOutDate())) {
+                    return false;
+                }
+            }
+        } return true;
+
+    }
     public static void reserveARoom(Customer customer, IRoom room, Date checkInDate, Date checkOutDate, boolean isFree) {
         Reservation reservation = new Reservation(customer, room, checkInDate, checkOutDate, isFree);
         String mapKey = (customer.getFirstName() + " " + customer.getLastName());
         reservations.put(mapKey, reservation);
-    }
-    static boolean dateInRange(Date checkInDate, Date checkOutDate, Reservation reservation) {
-        return checkInDate.before(reservation.getCheckOutDate()) || checkOutDate.after(reservation.getCheckInDate());
     }
     public static void findARoom(Date checkInDate, Date checkOutDate) {
         Collection<IRoom> rooms = getRooms();
@@ -51,7 +64,7 @@ public class ReservationService {
         for (ArrayList value : reservations.values()) {
             allReservations.add((Reservation) value);
             for (Reservation reservation : allReservations){
-                if (dateInRange(checkInDate, checkOutDate, reservation)) {
+                if (isRoomReserved(reservation.getRoom(), checkInDate, checkOutDate)) {
                     rooms.remove(reservation.getRoom());
             }
             }
