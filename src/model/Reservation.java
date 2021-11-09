@@ -5,7 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Reservation {
+public class Reservation extends ArrayList{
   private final Customer customer;
   private final IRoom room;
   private final Date checkInDate;
@@ -29,7 +29,6 @@ public class Reservation {
 
   public boolean getIsFree() { return isFree; }
 
-  }
 
   @Override
   public String toString() {

@@ -49,7 +49,7 @@ public class ReservationService {
         Collection<Reservation> allReservations = new ArrayList<Reservation>();
         ////stuck here - can't currently resolve typecast issue
         for (ArrayList value : reservations.values()) {
-            allReservations.add(value);
+            allReservations.add((Reservation) value);
             for (Reservation reservation : allReservations){
                 if (dateInRange(checkInDate, checkOutDate, reservation)) {
                     rooms.remove(reservation.getRoom());
