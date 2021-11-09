@@ -29,7 +29,6 @@ public class MainMenu {
 
                     case 1:
                         findARoom();
-                        System.out.println("\n");
                         break;
 
                     case 2:
