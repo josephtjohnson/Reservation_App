@@ -38,8 +38,9 @@ public class ReservationService {
         return roomList;
     }
     public static void reserveARoom(Customer customer, IRoom room, Date checkInDate, Date checkOutDate, boolean isFree) {
-    Reservation reservation = new Reservation(customer, room, checkInDate, checkOutDate, isFree);
-    reservations.get(customer.getFirstName() + " " + customer.getLastName()).add(reservation);
+        Reservation reservation = new Reservation(customer, room, checkInDate, checkOutDate, isFree);
+        String mapKey = (customer.getFirstName() + " " + customer.getLastName());
+        reservations.put(mapKey, reservation);
     }
     static boolean dateInRange(Date checkInDate, Date checkOutDate, Reservation reservation) {
         return checkInDate.before(reservation.getCheckOutDate()) || checkOutDate.after(reservation.getCheckInDate());
@@ -47,7 +48,6 @@ public class ReservationService {
     public static void findARoom(Date checkInDate, Date checkOutDate) {
         Collection<IRoom> rooms = getRooms();
         Collection<Reservation> allReservations = new ArrayList<Reservation>();
-        ////stuck here - can't currently resolve typecast issue
         for (ArrayList value : reservations.values()) {
             allReservations.add((Reservation) value);
             for (Reservation reservation : allReservations){
