@@ -46,14 +46,11 @@ public class HotelResource {
         getCustomersReservation();
     }
 
-    public static void findARoom(Date checkInDate, Date checkOutDate) {
-        ReservationService.findARoom(checkInDate, checkOutDate);
+    public static void findARoom() {
+        ReservationService.findARoom();
     }
 
     public static void createCustomer() {
         ReservationService.createCustomer();
-    }
-    public static void findARoom() {
-        ReservationService.findARoom();
     }
 }

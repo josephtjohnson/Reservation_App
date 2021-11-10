@@ -32,6 +32,6 @@ public class Reservation extends ArrayList{
 
   @Override
   public String toString() {
-    return room + " " + "Dates: " + checkInDate + " - " + checkOutDate;
+    return customer.getFullName() + " -- " + room + " " + "Dates: " + checkInDate + " - " + checkOutDate;
   }
 }

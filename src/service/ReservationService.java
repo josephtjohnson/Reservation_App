@@ -38,20 +38,28 @@ public class ReservationService {
         return roomList;
     }
     public static boolean isRoomReserved(IRoom room, Date checkInDate, Date checkOutDate) {
-        if(reservations.isEmpty()) { return false; }
+        boolean status = false;
+        if (reservations.isEmpty()) {
+            status = false;
+        }
         Collection<Reservation> reservedRooms = new ArrayList<Reservation>();
-        for(ArrayList value : reservations.values()) {
+        for (ArrayList value : reservations.values()) {
             reservedRooms.add((Reservation) value);
         }
         for (Reservation reservation : reservedRooms) {
             IRoom reservedRoom = reservation.getRoom();
-            if(room.getRoomNumber().equals(reservedRoom)) {
-                if(checkOutDate.before(reservation.getCheckInDate()) || checkInDate.after(reservation.getCheckOutDate())) {
-                    return false;
+            if (room.getRoomNumber().equals(reservedRoom)) {
+                if (checkInDate.before(reservation.getCheckInDate())
+                        && (checkOutDate.before(reservation.getCheckInDate()))
+                        || (checkInDate.after(reservation.getCheckOutDate())
+                        && (checkOutDate.after(reservation.getCheckOutDate())))) {
+                    status = false;
+                } else {
+                    status = true;
                 }
             }
-        } return true;
-
+        }
+        return status;
     }
     public static void reserveARoom(Customer customer, IRoom room, Date checkInDate, Date checkOutDate, boolean isFree) {
         Reservation reservation = new Reservation(customer, room, checkInDate, checkOutDate, isFree);
@@ -66,7 +74,7 @@ public class ReservationService {
             for (Reservation reservation : allReservations){
                 if (isRoomReserved(reservation.getRoom(), checkInDate, checkOutDate)) {
                     rooms.remove(reservation.getRoom());
-            }
+                }
             }
         }
         Collection<IRoom> availableRooms = rooms.stream().toList();
@@ -94,7 +102,7 @@ public class ReservationService {
     }
     public void printAllReservations() {
         reservations.forEach((key, value) -> System.out.println("\nCustomer Name: "+ key + " " + value));
-        }
+    }
 
     public static void createCustomer() {
         Scanner newCustomer = new Scanner(System.in);
@@ -262,5 +270,3 @@ public class ReservationService {
         return cal.getTime();
     }
 }
-
-
