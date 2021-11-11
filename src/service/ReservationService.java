@@ -12,7 +12,7 @@ import static service.CustomerService.getCustomer;
 
 public class ReservationService {
     private static ReservationService reservationService;
-    public static HashMap<String,ArrayList<Reservation>> reservations = new HashMap<String,ArrayList<Reservation>>();
+    public static HashMap<String,ArrayList<Reservation>> reservations = new HashMap<>();
     public static Collection<IRoom> roomList = new ArrayList<>();
     public static ReservationService getInstance() {
         if (null == reservationService) {
@@ -64,7 +64,9 @@ public class ReservationService {
     public static void reserveARoom(Customer customer, IRoom room, Date checkInDate, Date checkOutDate, boolean isFree) {
         Reservation reservation = new Reservation(customer, room, checkInDate, checkOutDate, isFree);
         String mapKey = (customer.getFirstName() + " " + customer.getLastName());
-        reservations.put(mapKey, reservation);
+        reservations.put(mapKey, new ArrayList<Reservation>());
+        reservations.get(mapKey).add(reservation);
+        System.out.println(reservation);
     }
     public static void findARoom(Date checkInDate, Date checkOutDate) {
         Collection<IRoom> rooms = getRooms();
@@ -101,7 +103,13 @@ public class ReservationService {
         }
     }
     public void printAllReservations() {
-        reservations.forEach((key, value) -> System.out.println("\nCustomer Name: "+ key + " " + value));
+        for (Map.Entry reservation : reservations.entrySet()) {
+            String key = (String) reservation.getKey();
+            ArrayList<Reservation> values = (ArrayList<Reservation>) reservation.getValue();
+            for (Reservation value : values) {
+                System.out.println(value);
+            }
+        }
     }
 
     public static void createCustomer() {
@@ -262,6 +270,7 @@ public class ReservationService {
             System.out.println(e);
             System.out.println("Test Reservations not created");
         }
+        System.out.println(reservations.size());
     }
     public static Date addDays(Date date, int days) {
         Calendar cal = Calendar.getInstance();
