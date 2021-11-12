@@ -1,18 +1,9 @@
 package menu;
 
-import api.AdminResource;
-import api.HotelResource;
-import model.*;
-import service.CustomerService;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 import static api.AdminResource.*;
-import static api.HotelResource.bookARoom;
-import static service.ReservationService.addTestCustomers;
-import static service.ReservationService.addTestRooms;
+
 
 public class AdminMenu {
     public static void main(String args){
@@ -61,12 +52,12 @@ public class AdminMenu {
                         System.out.println("\n");
                         break;                
                     default:
-                        System.out.println("\nInput incorrect. \nPlease enter a number 1 through 5");
+                        System.out.println("\nInput incorrect. \nPlease enter a number 1 through 5\n");
                 }
             }
             catch(Exception e) {
                 System.out.println(e);
-                System.out.println("\nInput incorrect. \nPlease enter a number 1 through 5");
+                System.out.println("\nInput incorrect. \nPlease enter a number 1 through 5\n");
             }
         }
     }
