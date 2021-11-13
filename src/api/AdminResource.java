@@ -2,8 +2,6 @@ package api;
 
 import model.Customer;
 import model.IRoom;
-import model.Reservation;
-import model.Room;
 import service.CustomerService;
 import service.ReservationService;
 
@@ -11,10 +9,10 @@ import java.util.*;
 
 import static service.CustomerService.getCustomers;
 import static service.ReservationService.getRooms;
-import static service.ReservationService.reservations;
+import static service.ReservationService.printAllReservations;
 
 public class AdminResource {
-    private static AdminResource adminResource = null;
+    private static final AdminResource adminResource = null;
     public static final Collection<IRoom> rooms = new HashSet<>();
     public static final CustomerService customerService = CustomerService.getInstance();
     public static final ReservationService reservationService = ReservationService.getInstance();
@@ -30,7 +28,7 @@ public class AdminResource {
     }
     public static void addRoom(List<IRoom> rooms){
         for (IRoom room : rooms) {
-            reservationService.addRoom(room);
+            ReservationService.addRoom(room);
         }
     }
     public static Collection<IRoom> getAllRooms(){
@@ -40,7 +38,7 @@ public class AdminResource {
         return getCustomers();
     }
     public static void displayAllReservations(){
-        reservationService.printAllReservations();
+        printAllReservations();
     }
     public static void customerList() {
         CustomerService.customerList();

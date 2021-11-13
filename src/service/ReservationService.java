@@ -36,12 +36,9 @@ public class ReservationService {
         return roomList;
     }
     public static boolean isRoomReserved(IRoom room, Date checkInDate, Date checkOutDate) {
-        boolean status = false;
-        if (reservations.isEmpty()) {
-            status = false;
-        }
+        var status = !reservations.isEmpty();
         Collection<Reservation> reservedRooms = new ArrayList<>();
-        for (ArrayList value : reservations.values()) {
+        for (ArrayList<Reservation> value : reservations.values()) {
             reservedRooms.add((Reservation) value);
         }
         for (Reservation reservation : reservedRooms) {
@@ -70,7 +67,7 @@ public class ReservationService {
     public static void findARoom(Date checkInDate, Date checkOutDate) {
         Collection<IRoom> rooms = getRooms();
         Collection<Reservation> allReservations = new ArrayList<>();
-        for (ArrayList value : reservations.values()) {
+        for (ArrayList<Reservation> value : reservations.values()) {
             allReservations.add((Reservation) value);
             for (Reservation reservation : allReservations){
                 if (isRoomReserved(reservation.getRoom(), checkInDate, checkOutDate)) {
@@ -115,7 +112,7 @@ public class ReservationService {
     public static void findARoom() {
         Date checkIn = null;
         Date checkOut = null;
-        boolean isFree = false;
+        var isFree = false;
         try {
             Scanner dates = new Scanner(System.in);
             System.out.println("Enter check-in date: mm-dd-yyyy");
@@ -194,7 +191,7 @@ public class ReservationService {
             case "N" -> room = new Room(roomNumber, roomPrice, roomType, false);
             default -> System.out.println("Input incorrect. \nPlease enter Y or N");
         }
-        if (!roomList.contains(room.getRoomNumber())) {
+        if (!roomList.contains(room)) {
             addRoom(room);
             System.out.println("Room added");
         }
@@ -207,7 +204,7 @@ public class ReservationService {
         for(int i = 1; i < 10; i++) {
             String roomNumber = String.valueOf(i);
             if (i % 2 == 0){
-                Double roomPrice = Double.valueOf(i);
+                Double roomPrice = (double) i;
                 IRoom room = new Room(roomNumber, roomPrice, IRoom.RoomType.SINGLE, false);
                 if(!testRooms.contains(room)) {
                     testRooms.add(room);

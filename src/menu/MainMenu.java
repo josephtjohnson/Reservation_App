@@ -1,7 +1,5 @@
 package menu;
 
-import api.HotelResource;
-
 import java.util.*;
 
 import static api.HotelResource.*;

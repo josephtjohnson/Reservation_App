@@ -7,7 +7,7 @@ import service.ReservationService;
 import java.util.Collection;
 import java.util.Date;
 import static service.CustomerService.*;
-import static service.ReservationService.getCustomersReservation;
+import static service.ReservationService.*;
 
 public class HotelResource {
     private static final HotelResource hotelResource = null;
@@ -35,11 +35,11 @@ public class HotelResource {
     }
 
     public static IRoom getRoom(String roomNumber) {
-        return reservationService.getARoom(roomNumber);
+        return getARoom(roomNumber);
     }
 
     public static void bookARoom(String customerEmail, IRoom room, Date checkInDate, Date checkOutDate, boolean isFree) {
-        reservationService.reserveARoom(getCustomer(customerEmail), room, checkInDate, checkOutDate, isFree);
+        reserveARoom(getCustomer(customerEmail), room, checkInDate, checkOutDate, isFree);
     }
 
     public static void getAllCustomerReservations() {

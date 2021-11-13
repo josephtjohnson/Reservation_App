@@ -4,8 +4,8 @@ import java.util.Scanner;
 import java.util.regex.Pattern;
 
 public class Customer{
-  private String firstName;
-  private String lastName;
+  private final String firstName;
+  private final String lastName;
   private String email;
   
   public Customer(String firstName, String lastName, String email){
@@ -24,8 +24,7 @@ public class Customer{
         catch(IllegalArgumentException e) {
           System.out.println(e + "\nPlease enter a customer first name. ");
           Scanner scanner = new Scanner(System.in);
-          String input = scanner.next();
-          firstName = input;
+          firstName = scanner.next();
         }
       }
     }
@@ -42,8 +41,7 @@ public class Customer{
         catch(IllegalArgumentException e) {
           System.out.println(e + "\nPlease enter a customer last name. ");
           Scanner scanner = new Scanner(System.in);
-          String input = scanner.next();
-          lastName = input;
+          lastName = scanner.next();
         }
       }
     }
@@ -60,8 +58,7 @@ public class Customer{
           catch(IllegalArgumentException e) {
             System.out.println(e + "\nPlease enter a valid email address: ");
             Scanner scanner = new Scanner(System.in);
-            String input = scanner.next();
-            this.email = input;
+            this.email = scanner.next();
           }
         }
     }
