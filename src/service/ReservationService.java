@@ -35,27 +35,6 @@ public class ReservationService {
     public static Collection<IRoom> getRooms(){
         return roomList;
     }
-    public static boolean isRoomReserved(IRoom room, Date checkInDate, Date checkOutDate) {
-        var status = !reservations.isEmpty();
-        Collection<Reservation> reservedRooms = new ArrayList<>();
-        for (ArrayList<Reservation> value : reservations.values()) {
-            reservedRooms.add((Reservation) value);
-        }
-        for (Reservation reservation : reservedRooms) {
-            String reservedRoom = reservation.getRoom().getRoomNumber();
-            if (room.getRoomNumber().equals(reservedRoom)) {
-                if (checkInDate.before(reservation.getCheckInDate())
-                        && (checkOutDate.before(reservation.getCheckInDate()))
-                        || (checkInDate.after(reservation.getCheckOutDate())
-                        && (checkOutDate.after(reservation.getCheckOutDate())))) {
-                    status = false;
-                } else {
-                    status = true;
-                }
-            }
-        }
-        return status;
-    }
     public static void reserveARoom(Customer customer, IRoom room, Date checkInDate, Date checkOutDate, boolean isFree) {
         Reservation reservation = new Reservation(customer, room, checkInDate, checkOutDate, isFree);
         String mapKey = (customer.getFirstName() + " " + customer.getLastName());
@@ -64,21 +43,21 @@ public class ReservationService {
         }
         reservations.get(mapKey).add(reservation);
     }
-    public static void findARoom(Date checkInDate, Date checkOutDate) {
+    static boolean isDateWithinRange (Date checkInDate, Date checkOutDate, Reservation reservation) {
+        return checkInDate.before(reservation.getCheckOutDate()) || checkOutDate.after(reservation.getCheckInDate());
+    }
+
+    public static Collection<IRoom> findAvailableRooms(Date checkInDate, Date checkOutDate) {
         Collection<IRoom> rooms = getRooms();
-        Collection<Reservation> allReservations = new ArrayList<>();
         for (ArrayList<Reservation> value : reservations.values()) {
-            allReservations.add((Reservation) value);
-            for (Reservation reservation : allReservations){
-                if (isRoomReserved(reservation.getRoom(), checkInDate, checkOutDate)) {
-                    rooms.remove(reservation.getRoom());
+            for (Reservation res : value) {
+                if (isDateWithinRange(checkInDate, checkOutDate, res)) {
+                    rooms.remove(res.getRoom());
                 }
             }
         }
         Collection<IRoom> availableRooms = rooms.stream().toList();
-        for (IRoom room:availableRooms) {
-            System.out.println(room);
-        }
+        return availableRooms;
     }
 
     public static void getCustomersReservation() {
@@ -148,7 +127,7 @@ public class ReservationService {
             switch (reserve.toUpperCase()) {
                 case "Y":
                     System.out.println("Here are all available hotel rooms");
-                    findARoom(checkIn, checkOut);
+                    System.out.println(findAvailableRooms(checkIn, checkOut));
                     System.out.println("Enter room number");
                     String roomNumber = book.nextLine();
                     System.out.println("Enter customer email");
