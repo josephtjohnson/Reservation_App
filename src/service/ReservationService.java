@@ -20,7 +20,9 @@ public class ReservationService {
     }
 
     public static void addRoom(IRoom room){
+
         roomList.add(room);
+        System.out.println(room);
     }
 
     public static IRoom getARoom(String roomId){
@@ -42,6 +44,7 @@ public class ReservationService {
             reservations.putIfAbsent(mapKey, new ArrayList<>());
         }
         reservations.get(mapKey).add(reservation);
+        System.out.println(reservation);
     }
     static boolean isDateWithinRange (Date checkInDate, Date checkOutDate, Reservation reservation) {
         return checkInDate.before(reservation.getCheckOutDate()) || checkOutDate.after(reservation.getCheckInDate());
@@ -133,7 +136,6 @@ public class ReservationService {
                     System.out.println("Enter customer email");
                     String customerEmail = book.nextLine();
                     reserveARoom(getCustomer(customerEmail), getARoom(roomNumber), checkIn, checkOut, isFree);
-                    System.out.println("Room reserved!");
                     break;
                 case "N":
                     break;
@@ -203,7 +205,7 @@ public class ReservationService {
                 }
             }
         }
-        System.out.println("Test rooms created");
+        System.out.println("TEST ROOMS CREATED\n");
     }
     public static void addTestCustomers() {
         var names = List.of("Jeff", "Todd", "Clare", "Ashley", "Pasq");
@@ -211,7 +213,7 @@ public class ReservationService {
             String customerEmail = name + "@gmail.com";
             addCustomer(customerEmail, name, "Tester");
         }
-        System.out.println("\nTest customers created");
+        System.out.println("TEST CUSTOMERS CREATED\n");
     }
     public static void addTestReservations() {
         try{
@@ -233,7 +235,7 @@ public class ReservationService {
             System.out.println(e);
             System.out.println("Test Reservations not created");
         }
-    System.out.println("Test reservations created");
+    System.out.println("TEST RESERVATIONS CREATED");
     }
     public static Date addDays(Date date, int days) {
         Calendar cal = Calendar.getInstance();

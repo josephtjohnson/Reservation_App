@@ -44,9 +44,9 @@ public class AdminMenu {
                         break;
                     case 5:
                         addTestData();
-                        System.out.println("*****************");
+                        System.out.println("\n*****************");
                         System.out.println("TEST DATA CREATED");
-                        System.out.println("*****************");
+                        System.out.println("*****************\n");
                         break;
                     case 6:
                         MainMenu.menu();

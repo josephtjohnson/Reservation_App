@@ -29,6 +29,9 @@ public class MainMenu {
 
                     case 1:
                         findARoom();
+                        System.out.println("******************************");
+                        System.out.println("THANK YOU FOR YOUR RESERVATION");
+                        System.out.println("******************************");
                         break;
 
                     case 2:
