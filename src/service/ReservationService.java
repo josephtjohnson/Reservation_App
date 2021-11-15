@@ -203,6 +203,7 @@ public class ReservationService {
                 }
             }
         }
+        System.out.println("Test rooms created");
     }
     public static void addTestCustomers() {
         var names = List.of("Jeff", "Todd", "Clare", "Ashley", "Pasq");
@@ -210,6 +211,7 @@ public class ReservationService {
             String customerEmail = name + "@gmail.com";
             addCustomer(customerEmail, name, "Tester");
         }
+        System.out.println("\nTest customers created");
     }
     public static void addTestReservations() {
         try{
@@ -231,6 +233,7 @@ public class ReservationService {
             System.out.println(e);
             System.out.println("Test Reservations not created");
         }
+    System.out.println("Test reservations created");
     }
     public static Date addDays(Date date, int days) {
         Calendar cal = Calendar.getInstance();
