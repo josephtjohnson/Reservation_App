@@ -22,6 +22,7 @@ public class CustomerService {
     public static void addCustomer(String email, String firstName, String lastName) {
         Customer customer = new Customer(firstName, lastName, email);
         customers.add(customer);
+        System.out.println(customer);
     }
     public static Customer getCustomer(String customerEmail) {
         for (Customer customer : customers) {

@@ -38,7 +38,10 @@ public class MainMenu {
 
                     case 3:
                         createCustomer();
-                        System.out.println("\n");
+                        System.out.println("****************");
+                        System.out.println("CUSTOMER CREATED");
+                        System.out.println("****************");
+
                         break;
 
                     case 4:

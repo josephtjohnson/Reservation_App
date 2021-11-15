@@ -62,7 +62,6 @@ public class Customer{
           }
         }
     }
-    System.out.println("Customer information saved.");
   }
   public String getFirstName() {
     return firstName;
