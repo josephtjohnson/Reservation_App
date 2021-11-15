@@ -88,7 +88,10 @@ public class ReservationService {
         String customer = getCustomer(email).getFullName();
         for (String reservation : reservations.keySet()) {
             if (reservation.equalsIgnoreCase(customer)) {
-                System.out.println(reservations.get(reservation));
+                ArrayList<Reservation> allReservations = reservations.get(reservation);
+                for (ArrayList<Reservation> value: allReservations) {
+                    System.out.println(value);
+                }
             }
         }
 
