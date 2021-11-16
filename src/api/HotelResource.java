@@ -21,27 +21,6 @@ public class HotelResource {
         return hotelResource;
     }
 
-    public static Customer retrieveCustomer(String email) {
-        return getCustomer(email);
-    }
-
-    public static Collection<Customer> getAllCustomers() {
-        return getCustomers();
-    }
-
-    public static void createACustomer(String email, String firstName, String lastName) {
-        addCustomer(email, firstName, lastName);
-
-    }
-
-    public static IRoom getRoom(String roomNumber) {
-        return getARoom(roomNumber);
-    }
-
-    public static void bookARoom(String customerEmail, IRoom room, Date checkInDate, Date checkOutDate, boolean isFree) {
-        reserveARoom(getCustomer(customerEmail), room, checkInDate, checkOutDate, isFree);
-    }
-
     public static void getAllCustomerReservations() {
         getCustomersReservation();
     }

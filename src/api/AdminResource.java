@@ -23,14 +23,6 @@ public class AdminResource {
         }
         return adminResource;
     }
-    public Customer getCustomer(String email){
-        return CustomerService.getCustomer(email);
-    }
-    public static void addRoom(List<IRoom> rooms){
-        for (IRoom room : rooms) {
-            ReservationService.addRoom(room);
-        }
-    }
     public static Collection<IRoom> getAllRooms(){
         return getRooms();
     }
