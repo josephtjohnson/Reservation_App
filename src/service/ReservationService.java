@@ -25,9 +25,9 @@ public class ReservationService {
         System.out.println(room);
     }
 
-    public static IRoom getARoom(String roomId){
+    public static IRoom getARoom(String roomNumber){
         for(IRoom room : roomList){
-            if(room.getRoomNumber().equals(roomId)){
+            if(room.getRoomNumber().equals(roomNumber)){
                 return room;
             }
         }
@@ -104,59 +104,6 @@ public class ReservationService {
         System.out.println("Enter customer last name: ");
         String customerLastName = newCustomer.nextLine();
         addCustomer(customerEmail, customerFirstName, customerLastName);
-    }
-    public static void findARoom() {
-        Date checkIn = null;
-        Date checkOut = null;
-        var isFree = false;
-        try {
-            Scanner dates = new Scanner(System.in);
-            System.out.println("Enter check-in date: mm-dd-yyyy");
-            String checkInDate = dates.nextLine();
-            System.out.println("Check-in Date: " + checkInDate);
-            checkIn = new SimpleDateFormat("MM-dd-yyyy").parse(checkInDate);
-            System.out.println("Enter check-out date: mm-dd-yyyy");
-            String checkOutDate = dates.nextLine();
-            System.out.println("Check-out Date: " + checkOutDate);
-            checkOut = new SimpleDateFormat("MM-dd-yyyy").parse(checkOutDate);
-            System.out.println("Will this room be free? Y or N");
-            String cost = dates.nextLine();
-            switch (cost.toUpperCase()) {
-                case "Y":
-                    isFree = true;
-                    break;
-                case "N":
-                    break;
-                default:
-                    System.out.println("Input incorrect. \nPlease enter Y or N");
-            }
-        } catch (Exception e) {
-            System.out.println(e);
-            System.err.println("Input incorrect. \nPlease enter Y or N");
-        }
-        System.out.println("Book a room? Y or N");
-        Scanner book = new Scanner(System.in);
-        String reserve = book.nextLine();
-        try {
-            switch (reserve.toUpperCase()) {
-                case "Y":
-                    System.out.println("Here are all available hotel rooms");
-                    System.out.println(findAvailableRooms(checkIn, checkOut));
-                    System.out.println("Enter room number");
-                    String roomNumber = book.nextLine();
-                    System.out.println("Enter customer email");
-                    String customerEmail = book.nextLine();
-                    reserveARoom(getCustomer(customerEmail), getARoom(roomNumber), checkIn, checkOut, isFree);
-                    break;
-                case "N":
-                    break;
-                default:
-                    System.out.println("Input incorrect. \nPlease enter Y or N");
-            }
-        } catch (Exception e) {
-            System.out.println(e);
-            System.err.println("Input incorrect. \nPlease enter Y or N");
-        }
     }
     public static void roomList() {
         List<IRoom> rooms = new ArrayList<>(getAllRooms());
