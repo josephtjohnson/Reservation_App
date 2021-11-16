@@ -46,21 +46,32 @@ public class ReservationService {
         reservations.get(mapKey).add(reservation);
         System.out.println(reservation);
     }
-    static boolean isDateWithinRange (Date checkInDate, Date checkOutDate, Reservation reservation) {
-        return checkInDate.before(reservation.getCheckOutDate()) || checkOutDate.after(reservation.getCheckInDate());
-    }
-
     public static Collection<IRoom> findAvailableRooms(Date checkInDate, Date checkOutDate) {
-        Collection<IRoom> rooms = getRooms();
-        for (ArrayList<Reservation> value : reservations.values()) {
-            for (Reservation res : value) {
-                if (isDateWithinRange(checkInDate, checkOutDate, res)) {
-                    rooms.remove(res.getRoom());
+        Collection<IRoom> availableRooms = new ArrayList<>(); //store rooms that are available, i.e. not reserved
+        for (IRoom room : roomList){
+            if (!isRoomReserved(room, checkInDate, checkOutDate)){
+                availableRooms.add(room);
+            }
+        }
+        return availableRooms;
+    }
+    public static boolean isRoomReserved(IRoom room, Date checkInDate, Date checkOutDate){
+        if (reservations.isEmpty()) return false; //if no reservation has been made, then all rooms are free
+        for (ArrayList<Reservation> reservations : reservations.values()) {
+            for (Reservation reservation : reservations){
+                IRoom reservedRoom = reservation.getRoom();
+                if (reservedRoom.getRoomNumber().equals(room.getRoomNumber())){
+                    // if the room has been reserved but the new date is not within the reserved room's date, then it is free.
+                    if (!isDateWithinRange(checkInDate, checkOutDate, reservation)){
+                        return false;
+                    }
                 }
             }
         }
-        Collection<IRoom> availableRooms = rooms.stream().toList();
-        return availableRooms;
+        return true;
+    }
+    public static boolean isDateWithinRange (Date checkInDate, Date checkOutDate, Reservation reservation) {
+        return !(checkInDate.before(reservation.getCheckOutDate()) || checkOutDate.after(reservation.getCheckInDate()));
     }
 
     public static void getCustomersReservation() {
