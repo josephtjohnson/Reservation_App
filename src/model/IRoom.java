@@ -15,5 +15,4 @@ public interface IRoom {
 
     public boolean isFree();
     
-    public IRoom getRoom();
 }
