@@ -32,4 +32,12 @@ public class HotelResource {
     public static void createCustomer() {
         ReservationService.createCustomer();
     }
+    
+    public static void bookARoom(customerEmail, room, checkIn, checkOut, isFree) {
+        ReservationService.reserveARoom(customerEmail, room, checkIn, checkOut, isFree);
+    }
+    
+    public static void getRoom(roomNumber) {
+        ReservationService.getARoom(roomNumber);
+    }
 }
