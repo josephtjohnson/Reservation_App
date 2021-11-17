@@ -7,10 +7,8 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 
-import static api.AdminResource.getAllCustomers;
-
 public class CustomerService {
-    private static Collection<Customer> customers = new HashSet<Customer>();
+    public Collection<Customer> customers = new HashSet<>();
     private static CustomerService customerService = null;
 
     public static CustomerService getInstance() {
@@ -37,9 +35,9 @@ public class CustomerService {
     }
 
     public void customerList(){
-        List<Customer> customers = new ArrayList<>(getAllCustomers());
+        List<Customer> allCustomers = new ArrayList<>(customers);
         for(Customer customer:customers){
-            System.out.println(customer);
+            System.out.println(allCustomers);
         }
     }
 

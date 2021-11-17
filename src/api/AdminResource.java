@@ -19,20 +19,25 @@ public class AdminResource {
         }
         return adminResource;
     }
-    public static Collection<IRoom> getAllRooms(){
+    public Collection<IRoom> getAllRooms(){
         return reservationService.getRooms();
     }
-    public static Collection<Customer> getAllCustomers(){
+    public Collection<Customer> getAllCustomers(){
         return customerService.getCustomers();
     }
-    public static void displayAllReservations(){
+    public void displayAllReservations(){
         reservationService.printAllReservations();
     }
-    public static void customerList() { customerService.customerList(); }
-    public static void roomList() {
+    public void customerList() { customerService.customerList(); }
+    public void roomList() {
         reservationService.roomList();
     }
-    public static void reserveARoom(Customer customer, IRoom room, Date checkIn, Date checkOut, boolean isFree) {
+    public void reserveARoom(Customer customer, IRoom room, Date checkIn, Date checkOut, boolean isFree) {
         reservationService.reserveARoom(customer, room, checkIn, checkOut, isFree);
+    }
+    public void addTestData() {
+        reservationService.addTestCustomers();
+        reservationService.addTestRooms();
+        reservationService.addTestCustomers();
     }
 }

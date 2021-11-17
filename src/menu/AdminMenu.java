@@ -2,12 +2,9 @@ package menu;
 
 import api.AdminResource;
 import api.HotelResource;
-import model.Customer;
 import model.FreeRoom;
 import model.IRoom;
 import model.Room;
-
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 import static api.AdminResource.*;
@@ -18,6 +15,8 @@ public class AdminMenu {
         adminMenu();
     }
     public static void adminMenu() {
+        final AdminResource adminResource = AdminResource.getInstance();
+        Collection<IRoom> rooms = new ArrayList<>(adminResource.getAllRooms());
         boolean keepRunning = true;
         Scanner scanner = new Scanner(System.in);
         while (keepRunning) {
@@ -35,15 +34,15 @@ public class AdminMenu {
 
                 switch (selection) {
                     case 1:
-                        customerList();
+                        adminResource.customerList();
                         System.out.println("\n");
                         break;
                     case 2:
-                        roomList();
+                        adminResource.roomList();
                         System.out.println("\n");
                         break;
                     case 3:
-                        displayAllReservations();
+                        adminResource.displayAllReservations();
                         System.out.println("\n");
                         break;
                     case 4:
@@ -51,9 +50,7 @@ public class AdminMenu {
                         System.out.println("\n");
                         break;
                     case 5:
-                        addTestCustomers();
-                        addTestRooms();
-                        addTestReservations();
+                        adminResource.addTestData();
                         System.out.println("\n*****************");
                         System.out.println("TEST DATA CREATED");
                         System.out.println("*****************\n");
@@ -71,66 +68,6 @@ public class AdminMenu {
                 System.out.println("\nInput incorrect. \nPlease enter a number 1 through 5\n");
             }
         }
-    }
-    public static void addTestRooms(){
-        List<IRoom> testRooms = new ArrayList<>();
-        for(int i = 1; i < 10; i++) {
-            String roomNumber = String.valueOf(i);
-            if (i % 2 == 0){
-                Double roomPrice = (double) i;
-                IRoom room = new Room(roomNumber, roomPrice, IRoom.RoomType.SINGLE, false);
-                if(!testRooms.contains(room)) {
-                    testRooms.add(room);
-                    HotelResource.addRoom(room);
-                }
-            }
-            else {
-                Double roomPrice = 0.0;
-                IRoom room = new FreeRoom(roomNumber, roomPrice, IRoom.RoomType.DOUBLE, true);
-                if(!testRooms.contains(room)) {
-                    testRooms.add(room);
-                    HotelResource.addRoom(room);
-
-                }
-            }
-        }
-        System.out.println("TEST ROOMS CREATED\n");
-    }
-    public static void addTestCustomers() {
-        var names = List.of("Jeff", "Todd", "Clare", "Ashley", "Pasq");
-        for(String name:names){
-            String customerEmail = name + "@gmail.com";
-            HotelResource.createCustomer(customerEmail, name, "Tester");
-        }
-        System.out.println("TEST CUSTOMERS CREATED\n");
-    }
-    public static void addTestReservations() {
-        try{
-            List<Customer> customers = new ArrayList<>(AdminResource.getAllCustomers());
-            List<IRoom> rooms = new ArrayList<>(AdminResource.getAllRooms());
-            String checkInDate = "01-01-2021";
-            Date checkIn = new SimpleDateFormat("MM-dd-yyyy").parse(checkInDate);
-            String checkOutDate = "01-02-2021";
-            Date checkOut = new SimpleDateFormat("MM-dd-yyyy").parse(checkOutDate);
-            for (IRoom room : rooms) {
-                for (Customer customer:customers){
-                    reserveARoom(customer, room, checkIn, checkOut, room.isFree());
-                    checkIn = addDays(checkIn, 2);
-                    checkOut = addDays(checkOut, 2);
-                }
-            }
-        }
-        catch (Exception e) {
-            System.out.println(e);
-            System.out.println("Test Reservations not created");
-        }
-        System.out.println("TEST RESERVATIONS CREATED");
-    }
-    public static Date addDays(Date date, int days) {
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(date);
-        cal.add(Calendar.DATE, days); //minus number would decrement the days
-        return cal.getTime();
     }
     public static void addRooms() {
         Scanner scanner = new Scanner(System.in);
@@ -154,7 +91,7 @@ public class AdminMenu {
             case "N" -> room = new Room(roomNumber, roomPrice, roomType, false);
             default -> System.out.println("Input incorrect. \nPlease enter Y or N");
         }
-        if (!AdminResource.getAllRooms().contains(room)) {
+        if (!rooms.contains(room)) {
             HotelResource.addRoom(room);
             System.out.println("Room added");
         }
