@@ -12,7 +12,7 @@ public class CustomerService {
     private static CustomerService customerService = null;
 
     public static CustomerService getInstance() {
-        if(null == customerService) {
+        if(customerService == null) {
             customerService = new CustomerService();
         }
         return customerService;
