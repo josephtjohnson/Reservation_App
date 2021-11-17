@@ -4,10 +4,10 @@ import model.Customer;
 import model.IRoom;
 import service.CustomerService;
 import service.ReservationService;
+
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
-import static service.CustomerService.*;
-import static service.ReservationService.*;
 
 public class HotelResource {
     private static final HotelResource hotelResource = null;
@@ -21,23 +21,21 @@ public class HotelResource {
         return hotelResource;
     }
 
-    public static void getAllCustomerReservations() {
-        getCustomersReservation();
+    public static Collection<IRoom> findARoom(Date checkIn, Date checkOut) {
+        return reservationService.findAvailableRooms(checkIn, checkOut);
     }
 
-    public static void findARoom() {
-        ReservationService.findARoom();
-    }
-
-    public static void createCustomer() {
-        ReservationService.createCustomer();
+    public static void createCustomer(String email, String firstName, String lastName) {
+        customerService.addCustomer(email, firstName, lastName);
     }
     
-    public static void bookARoom(customerEmail, room, checkIn, checkOut, isFree) {
-        ReservationService.reserveARoom(customerEmail, room, checkIn, checkOut, isFree);
+    public static void bookARoom(String customerEmail, IRoom room, Date checkIn, Date checkOut, boolean isFree) {
+        reservationService.reserveARoom(customerService.getCustomer(customerEmail), room, checkIn, checkOut, isFree);
     }
     
-    public static void getRoom(roomNumber) {
-        ReservationService.getARoom(roomNumber);
-    }
+    public static IRoom getRoom(String roomNumber) { return reservationService.getARoom(roomNumber);}
+    public static void addRoom(IRoom room) {reservationService.addRoom(room);}
+    public static Customer getCustomer(String customerEmail) {return customerService.getCustomer(customerEmail);}
+    public static ArrayList getCustomerReservations (String customer) {
+        return reservationService.getCustomerReservations(customer);}
 }

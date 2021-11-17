@@ -19,12 +19,11 @@ public class CustomerService {
         }
         return customerService;
     }
-    public static void addCustomer(String email, String firstName, String lastName) {
+    public void addCustomer(String email, String firstName, String lastName) {
         Customer customer = new Customer(firstName, lastName, email);
         customers.add(customer);
-        System.out.println(customer);
     }
-    public static Customer getCustomer(String customerEmail) {
+    public Customer getCustomer(String customerEmail) {
         for (Customer customer : customers) {
             if(customer.getEmail().equalsIgnoreCase(customerEmail)) {
                 return customer;
@@ -33,11 +32,11 @@ public class CustomerService {
         System.out.println("Customer does not exist");
         return null;
     }
-    public static Collection<Customer> getCustomers(){
+    public Collection<Customer> getCustomers(){
         return customers;
     }
 
-    public static void customerList(){
+    public void customerList(){
         List<Customer> customers = new ArrayList<>(getAllCustomers());
         for(Customer customer:customers){
             System.out.println(customer);

@@ -1,8 +1,9 @@
 package menu;
 
+import api.HotelResource;
+import model.IRoom;
+import java.text.SimpleDateFormat;
 import java.util.*;
-
-import static api.HotelResource.*;
 
 public class MainMenu {
     public static void main(String[] args) {
@@ -35,7 +36,7 @@ public class MainMenu {
                         break;
 
                     case 2:
-                        getAllCustomerReservations();
+                        getCustomersReservation();
                         System.out.println("\n");
                         break;
 
@@ -68,7 +69,6 @@ public class MainMenu {
                 }
             }
         }
-    }
 
     public static void findAndReserveRoom() {
         Date checkIn = null;
@@ -106,7 +106,7 @@ public class MainMenu {
             switch (reserve.toUpperCase()) {
                 case "Y":
                     System.out.println("Here are all available hotel rooms");
-                    System.out.println(HotelResource.findAvailableRooms(checkIn, checkOut));
+                    System.out.println(HotelResource.findARoom(checkIn, checkOut));
                     System.out.println("Enter room number");
                     String roomNumber = book.nextLine();
                     System.out.println("Enter customer email");
@@ -124,3 +124,22 @@ public class MainMenu {
             System.err.println("Input incorrect. \nPlease enter Y or N");
         }
     }
+    public static void getCustomersReservation() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter customer Email:" );
+        String email = scanner.next();
+        String customer = HotelResource.getCustomer(email).getFullName();
+        System.out.println(HotelResource.getCustomerReservations(customer));
+
+    }
+    public static void createCustomer() {
+        Scanner newCustomer = new Scanner(System.in);
+        System.out.println("Enter customer email: ");
+        String customerEmail = newCustomer.nextLine();
+        System.out.println("Enter customer first name: ");
+        String customerFirstName = newCustomer.nextLine();
+        System.out.println("Enter customer last name: ");
+        String customerLastName = newCustomer.nextLine();
+        HotelResource.createCustomer(customerEmail, customerFirstName, customerLastName);
+    }
+}

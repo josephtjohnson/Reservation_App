@@ -7,10 +7,6 @@ import service.ReservationService;
 
 import java.util.*;
 
-import static service.CustomerService.getCustomers;
-import static service.ReservationService.getRooms;
-import static service.ReservationService.printAllReservations;
-
 public class AdminResource {
     private static final AdminResource adminResource = null;
     public static final Collection<IRoom> rooms = new HashSet<>();
@@ -24,26 +20,19 @@ public class AdminResource {
         return adminResource;
     }
     public static Collection<IRoom> getAllRooms(){
-        return getRooms();
+        return reservationService.getRooms();
     }
     public static Collection<Customer> getAllCustomers(){
-        return getCustomers();
+        return customerService.getCustomers();
     }
     public static void displayAllReservations(){
-        printAllReservations();
+        reservationService.printAllReservations();
     }
-    public static void customerList() {
-        CustomerService.customerList();
-    }
+    public static void customerList() { customerService.customerList(); }
     public static void roomList() {
-        ReservationService.roomList();
+        reservationService.roomList();
     }
-    public static void addRooms() {
-        ReservationService.addRooms();
-    }
-    public static void addTestData() {
-        ReservationService.addTestCustomers();
-        ReservationService.addTestRooms();
-        ReservationService.addTestReservations();
+    public static void reserveARoom(Customer customer, IRoom room, Date checkIn, Date checkOut, boolean isFree) {
+        reservationService.reserveARoom(customer, room, checkIn, checkOut, isFree);
     }
 }
