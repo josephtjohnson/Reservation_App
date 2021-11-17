@@ -9,59 +9,15 @@ public class Customer{
   private String email;
   
   public Customer(String firstName, String lastName, String email){
-    boolean keepRunning = true;
+    validateEmail(email);
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.email = email;
+  }
+  public void validateEmail (String email) throws IllegalArgumentException {
     String emailRegex = "^(.+)@(.+).(.+)$";
     Pattern pattern = Pattern.compile(emailRegex);
-    this.firstName = firstName;
-    while (keepRunning){
-      if(firstName != null) {
-        keepRunning = false;
-      }
-      else {
-        try {
-          throw new IllegalArgumentException("First name cannot be empty. ");
-        }
-        catch(IllegalArgumentException e) {
-          System.out.println(e + "\nPlease enter a customer first name. ");
-          Scanner scanner = new Scanner(System.in);
-          firstName = scanner.next();
-        }
-      }
-    }
-    keepRunning = true;
-    this.lastName = lastName;
-    while (keepRunning){
-      if(lastName != null) {
-        keepRunning = false;
-      }
-      else {
-        try {
-          throw new IllegalArgumentException("Last name cannot be empty. ");
-        }
-        catch(IllegalArgumentException e) {
-          System.out.println(e + "\nPlease enter a customer last name. ");
-          Scanner scanner = new Scanner(System.in);
-          lastName = scanner.next();
-        }
-      }
-    }
-    keepRunning = true;
-    this.email = email;
-    while (keepRunning){
-        if(pattern.matcher(this.email).matches()) {
-          keepRunning = false;
-        }
-        else {
-          try {
-            throw new IllegalArgumentException("Invalid email format (ex. j@email.com). ");
-          }
-          catch(IllegalArgumentException e) {
-            System.out.println(e + "\nPlease enter a valid email address: ");
-            Scanner scanner = new Scanner(System.in);
-            this.email = scanner.next();
-          }
-        }
-    }
+    if (!pattern.matcher(email).matches()) throw new IllegalArgumentException("Email is not valid");
   }
   public String getFirstName() {
     return firstName;
