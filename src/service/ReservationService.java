@@ -64,21 +64,23 @@ public class ReservationService {
     public boolean isRoomReserved(IRoom room, Date checkInDate, Date checkOutDate) {
         if (reservations.isEmpty()) return false; //if no reservation has been made, then all rooms are free
         for (ArrayList<Reservation> reservations : reservations.values()) {
+            System.out.println("Number of reservations: " + reservations.size() + " ");
             for (Reservation reservation : reservations) {
                 IRoom reservedRoom = reservation.getRoom();
                 if (reservedRoom.getRoomNumber().equals(room.getRoomNumber())) {
+                    System.out.println("Room is reserved..checking if room will be free by date...");
                     // if the room has been reserved but the new date is not within the reserved room's date, then it is free.
-                    if (!isDateWithinRange(checkInDate, checkOutDate, reservation)) {
-                        return false;
+                    if (isDateWithinRange(checkInDate, checkOutDate, reservation)) {
+                        return true;
                     }
                 }
             }
         }
-        return true;
+        return false;
     }
 
     public boolean isDateWithinRange(Date checkInDate, Date checkOutDate, Reservation reservation) {
-        return !(checkInDate.before(reservation.getCheckOutDate()) || checkOutDate.after(reservation.getCheckInDate()));
+        return !(checkOutDate.before(reservation.getCheckInDate()) || checkInDate.after(reservation.getCheckOutDate()));
     }
 
     public void printAllReservations() {
