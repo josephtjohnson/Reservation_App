@@ -16,7 +16,7 @@ public class MainMenu {
         Scanner scanner = new Scanner(System.in);
         while (keepRunning) {
             try {
-                System.out.println("\nPlease select one of the following options");
+                System.out.println("Please select one of the following options");
                 System.out.println("1. Find and reserve a room");
                 System.out.println("2. See my reservation");
                 System.out.println("3. Create an account");
@@ -78,11 +78,9 @@ public class MainMenu {
             Scanner dates = new Scanner(System.in);
             System.out.println("Enter check-in date: mm-dd-yyyy");
             String checkInDate = dates.nextLine();
-            System.out.println("Check-in Date: " + checkInDate);
             checkIn = new SimpleDateFormat("MM-dd-yyyy").parse(checkInDate);
             System.out.println("Enter check-out date: mm-dd-yyyy");
             String checkOutDate = dates.nextLine();
-            System.out.println("Check-out Date: " + checkOutDate);
             checkOut = new SimpleDateFormat("MM-dd-yyyy").parse(checkOutDate);
             System.out.println("Will this room be free? Y or N");
             String cost = dates.nextLine();
@@ -106,9 +104,24 @@ public class MainMenu {
             switch (reserve.toUpperCase()) {
                 case "Y":
                     System.out.println("Here are all available hotel rooms");
-                    System.out.println(HotelResource.findARoom(checkIn, checkOut));
+                    Collection<IRoom> rooms = new ArrayList<>(HotelResource.findARoom(checkIn, checkOut));
+                    Collection<String> roomNumbers = new HashSet<>();
+                    for (IRoom room : rooms) {
+                        System.out.println(room);
+                        roomNumbers.add(room.getRoomNumber());
+                    }
                     System.out.println("Enter room number");
-                    String roomNumber = book.nextLine();
+                    String roomNumber = null;
+                    try {
+                        roomNumber = book.nextLine();
+                        if (!roomNumbers.contains(roomNumber)) {
+                            System.out.println("Room unavailable. Please select an available room from the list.");
+                            roomNumber = book.nextLine();
+                        }
+                    } catch (Exception e) {
+                        System.out.println(e);
+                        System.out.println("Invalid input");
+                    }
                     System.out.println("Enter customer email");
                     String customerEmail = book.nextLine();
                     IRoom room = HotelResource.getRoom(roomNumber);
@@ -129,7 +142,7 @@ public class MainMenu {
         System.out.println("Enter customer Email:" );
         String email = scanner.next();
         String customer = HotelResource.getCustomer(email).getFullName();
-        System.out.println(HotelResource.getCustomerReservations(customer));
+        HotelResource.getCustomerReservations(customer);
 
     }
     public static void createCustomer() {

@@ -1,18 +1,15 @@
 package service;
 
-import api.AdminResource;
 import api.HotelResource;
 import model.*;
-
 import java.text.SimpleDateFormat;
 import java.util.*;
-
 import static api.AdminResource.*;
 
 public class ReservationService {
     private static ReservationService reservationService;
     public static HashMap<String, ArrayList<Reservation>> reservations = new HashMap<>();
-    public static Collection<IRoom> roomList = new ArrayList<>();
+    Collection<IRoom> roomList = new ArrayList<>();
 
     public static ReservationService getInstance() {
         if (null == reservationService) {
@@ -58,17 +55,15 @@ public class ReservationService {
                 availableRooms.add(room);
             }
         }
-        return availableRooms;
+    return availableRooms;
     }
 
     public boolean isRoomReserved(IRoom room, Date checkInDate, Date checkOutDate) {
         if (reservations.isEmpty()) return false; //if no reservation has been made, then all rooms are free
         for (ArrayList<Reservation> reservations : reservations.values()) {
-            System.out.println("Number of reservations: " + reservations.size() + " ");
             for (Reservation reservation : reservations) {
                 IRoom reservedRoom = reservation.getRoom();
                 if (reservedRoom.getRoomNumber().equals(room.getRoomNumber())) {
-                    System.out.println("Room is reserved..checking if room will be free by date...");
                     // if the room has been reserved but the new date is not within the reserved room's date, then it is free.
                     if (isDateWithinRange(checkInDate, checkOutDate, reservation)) {
                         return true;
@@ -96,7 +91,7 @@ public class ReservationService {
         }
     }
 
-    public ArrayList getCustomerReservations(String customer) {
+    public void getCustomerReservations(String customer) {
         ArrayList<ArrayList<Reservation>> customerReservations = new ArrayList<>();
         for (String reservation : reservations.keySet()) {
             if (reservation.equalsIgnoreCase(customer)) {
@@ -106,7 +101,9 @@ public class ReservationService {
                 }
             }
         }
-        return customerReservations;
+        for (ArrayList res : customerReservations) {
+            System.out.println(res);
+        }
     }
 
     public void addTestRooms() {

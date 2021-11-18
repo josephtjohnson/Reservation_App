@@ -56,8 +56,7 @@ public class AdminMenu {
                         System.out.println("*****************\n");
                         break;
                     case 6:
-                        MainMenu.menu();
-                        System.out.println("\n");
+                        keepRunning = false;
                         break;                
                     default:
                         System.out.println("\nInput incorrect. \nPlease enter a number 1 through 5\n");

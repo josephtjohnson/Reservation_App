@@ -10,13 +10,13 @@ import java.util.Collection;
 import java.util.Date;
 
 public class HotelResource {
-    private static final HotelResource hotelResource = null;
+    private static HotelResource hotelResource;
     public static final CustomerService customerService = CustomerService.getInstance();
     public static final ReservationService reservationService = ReservationService.getInstance();
 
     public static HotelResource getInstance() {
         if (null == hotelResource) {
-            HotelResource hotelResource = new HotelResource();
+            hotelResource = new HotelResource();
         }
         return hotelResource;
     }
@@ -36,6 +36,6 @@ public class HotelResource {
     public static IRoom getRoom(String roomNumber) { return reservationService.getARoom(roomNumber);}
     public static void addRoom(IRoom room) {reservationService.addRoom(room);}
     public static Customer getCustomer(String customerEmail) {return customerService.getCustomer(customerEmail);}
-    public static ArrayList getCustomerReservations (String customer) {
-        return reservationService.getCustomerReservations(customer);}
+    public static void getCustomerReservations (String customer) {
+        reservationService.getCustomerReservations(customer);}
 }

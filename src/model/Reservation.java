@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Objects;
 
 public class Reservation extends ArrayList{
   private final Customer customer;
@@ -38,7 +39,9 @@ public class Reservation extends ArrayList{
   @Override
   public int hashCode() {
     int hash = 7;
-    hash =  31 * hash + Objects.hashCode(this.customer) + Objects.hashCode(this.room) + Objects.hashCode(this.checkInDate) + Objects.hashCode(this.checkOutDate) + Objects.hashCode(this.isFree)
+    hash =  31 * hash + Objects.hashCode(this.customer) + Objects.hashCode(this.room) +
+            Objects.hashCode(this.checkInDate) + Objects.hashCode(this.checkOutDate) +
+            Objects.hashCode(this.isFree);
     return hash;
   }
   

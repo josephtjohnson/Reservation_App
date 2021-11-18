@@ -35,9 +35,9 @@ public class CustomerService {
     }
 
     public void customerList(){
-        List<Customer> allCustomers = new ArrayList<>(customers);
-        for(Customer customer:customers){
-            System.out.println(allCustomers);
+        Collection<Customer> allCustomers = new HashSet<>(customers);
+        for(Customer customer: allCustomers){
+            System.out.println(customer);
         }
     }
 

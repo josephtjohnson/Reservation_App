@@ -8,14 +8,14 @@ import service.ReservationService;
 import java.util.*;
 
 public class AdminResource {
-    private static final AdminResource adminResource = null;
+    private static AdminResource adminResource;
     public static final Collection<IRoom> rooms = new HashSet<>();
     public static final CustomerService customerService = CustomerService.getInstance();
     public static final ReservationService reservationService = ReservationService.getInstance();
 
     public static AdminResource getInstance() {
-        if(null == adminResource){
-            AdminResource adminResource = new AdminResource();
+        if (null == adminResource){
+            adminResource = new AdminResource();
         }
         return adminResource;
     }
@@ -38,6 +38,6 @@ public class AdminResource {
     public void addTestData() {
         reservationService.addTestCustomers();
         reservationService.addTestRooms();
-        reservationService.addTestCustomers();
+        reservationService.addTestReservations();
     }
 }
