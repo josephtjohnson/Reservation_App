@@ -112,15 +112,19 @@ public class MainMenu {
                     }
                     System.out.println("Enter room number");
                     String roomNumber = null;
-                    try {
-                        roomNumber = book.nextLine();
-                        if (!roomNumbers.contains(roomNumber)) {
-                            System.out.println("Room unavailable. Please select an available room from the list.");
+                    while(true) {
+                        try {
                             roomNumber = book.nextLine();
+                            if (!roomNumbers.contains(roomNumber)) {
+                                System.out.println("Room unavailable. Please select an available room from the list.");
+                            }
+                            else {
+                                break;
+                            }
+                        } catch (Exception e) {
+                            System.out.println(e);
+                            System.out.println("Invalid input");
                         }
-                    } catch (Exception e) {
-                        System.out.println(e);
-                        System.out.println("Invalid input");
                     }
                     System.out.println("Enter customer email");
                     String customerEmail = book.nextLine();
