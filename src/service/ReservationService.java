@@ -19,9 +19,13 @@ public class ReservationService {
     }
 
     public void addRoom(IRoom room) {
-
-        roomList.add(room);
-        System.out.println(room);
+        if (!roomList.contains(room)) {
+            roomList.add(room);
+            System.out.println(room);
+        }
+        else {
+            System.out.println("Room already in database");
+        }
     }
 
     public IRoom getARoom(String roomNumber) {
