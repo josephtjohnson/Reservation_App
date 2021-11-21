@@ -9,7 +9,7 @@ import static api.AdminResource.*;
 public class ReservationService {
     private static ReservationService reservationService;
     public static HashMap<String, ArrayList<Reservation>> reservations = new HashMap<>();
-    Collection<IRoom> roomList = new ArrayList<>();
+    public static Collection<IRoom> roomList = new HashSet<>();
 
     public static ReservationService getInstance() {
         if (null == reservationService) {

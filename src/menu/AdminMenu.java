@@ -69,6 +69,7 @@ public class AdminMenu {
         }
     }
     public static void addRooms() {
+        final AdminResource adminResource = AdminResource.getInstance();
         Scanner scanner = new Scanner(System.in);
         System.out.println("Please enter a room number");
         String roomNumber = scanner.nextLine();
@@ -90,7 +91,7 @@ public class AdminMenu {
             case "N" -> room = new Room(roomNumber, roomPrice, roomType, false);
             default -> System.out.println("Input incorrect. \nPlease enter Y or N");
         }
-        if (!rooms.contains(room)) {
+        if (!adminResource.getAllRooms().contains(room)) {
             HotelResource.addRoom(room);
             System.out.println("Room added");
         }
