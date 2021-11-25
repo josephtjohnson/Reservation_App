@@ -38,4 +38,5 @@ public class HotelResource {
     public static Customer getCustomer(String customerEmail) {return customerService.getCustomer(customerEmail);}
     public static void getCustomerReservations (String customer) {
         reservationService.getCustomerReservations(customer);}
+
 }

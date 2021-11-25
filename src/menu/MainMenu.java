@@ -1,5 +1,6 @@
 package menu;
 
+import api.AdminResource;
 import api.HotelResource;
 import model.IRoom;
 import java.text.SimpleDateFormat;
@@ -7,7 +8,6 @@ import java.util.*;
 
 public class MainMenu {
     public static void main(String[] args) {
-
         menu();
     }
 
@@ -30,9 +30,6 @@ public class MainMenu {
 
                     case 1:
                         findAndReserveRoom();
-                        System.out.println("******************************");
-                        System.out.println("THANK YOU FOR YOUR RESERVATION");
-                        System.out.println("******************************");
                         break;
 
                     case 2:
@@ -71,6 +68,8 @@ public class MainMenu {
         }
 
     public static void findAndReserveRoom() {
+        final AdminResource adminResource = AdminResource.getInstance();
+        Collection<String> roomNumbers = new HashSet<>();
         Date checkIn = null;
         Date checkOut = null;
         var isFree = false;
@@ -103,12 +102,17 @@ public class MainMenu {
         try {
             switch (reserve.toUpperCase()) {
                 case "Y":
-                    System.out.println("Here are all available hotel rooms");
-                    Collection<IRoom> rooms = new ArrayList<>(HotelResource.findARoom(checkIn, checkOut));
-                    Collection<String> roomNumbers = new HashSet<>();
-                    for (IRoom room : rooms) {
-                        System.out.println(room);
-                        roomNumbers.add(room.getRoomNumber());
+                    if (adminResource.getAllRooms().isEmpty()) {
+                        System.out.println("There are no rooms in the database. Please create rooms.\n");
+                        break;
+                    }
+                    else {
+                        System.out.println("Here are all available hotel rooms");
+                        Collection<IRoom> rooms = new ArrayList<>(HotelResource.findARoom(checkIn, checkOut));
+                        for (IRoom room : rooms) {
+                            System.out.println(room);
+                            roomNumbers.add(room.getRoomNumber());
+                        }
                     }
                     System.out.println("Enter room number");
                     String roomNumber = null;
@@ -130,6 +134,9 @@ public class MainMenu {
                     String customerEmail = book.nextLine();
                     IRoom room = HotelResource.getRoom(roomNumber);
                     HotelResource.bookARoom(customerEmail, room, checkIn, checkOut, isFree);
+                    System.out.println("******************************");
+                    System.out.println("THANK YOU FOR YOUR RESERVATION");
+                    System.out.println("******************************");
                     break;
                 case "N":
                     break;
