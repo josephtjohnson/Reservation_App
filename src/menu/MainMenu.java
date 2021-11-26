@@ -132,23 +132,15 @@ public class MainMenu {
                                                     newRooms = new ArrayList<>(HotelResource.findARoom(checkIn, checkOut));
                                                     if (!newRooms.isEmpty()) {
                                                         keepRunning = false;
-                                                    } else {
-                                                        System.out.println("Here are all available hotel rooms");
-                                                        System.out.println("Dates: " + checkIn + "-" + checkOut + "\n");
-                                                        for (IRoom room : newRooms) {
-                                                            System.out.println(room);
-                                                            roomNumbers.add(room.getRoomNumber());
-                                                        }
-                                                        keepRunning = false;
                                                     }
-                                                    System.out.println("Here are all available hotel rooms");
-                                                    System.out.println("Dates: " + checkIn + "-" + checkOut + "\n");
-                                                    for (IRoom room : newRooms) {
-                                                        System.out.println(room);
-                                                        roomNumbers.add(room.getRoomNumber());
-                                                    }
-                                                    run = false;
                                                 }
+                                                System.out.println("Here are all available hotel rooms");
+                                                System.out.println("Dates: " + checkIn + "-" + checkOut + "\n");
+                                                for (IRoom room : newRooms) {
+                                                    System.out.println(room);
+                                                    roomNumbers.add(room.getRoomNumber());
+                                                }
+                                                run = false;
                                             } else {
                                                 System.out.println("Here are all available hotel rooms");
                                                 System.out.println("Dates: " + checkIn + "-" + checkOut + "\n");
