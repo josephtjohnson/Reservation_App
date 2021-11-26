@@ -78,7 +78,7 @@ public class ReservationService {
         return false;
     }
 
-    public boolean isDateWithinRange(Date checkInDate, Date checkOutDate, Reservation reservation) {
+    boolean isDateWithinRange(Date checkInDate, Date checkOutDate, Reservation reservation) {
         return !(checkOutDate.before(reservation.getCheckInDate()) || checkInDate.after(reservation.getCheckOutDate()));
     }
 
