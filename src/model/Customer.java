@@ -8,7 +8,7 @@ public class Customer{
   private final String lastName;
   private String email;
   
-  public Customer(String firstName, String lastName, String email){
+  public Customer(String firstName, String lastName, String email) {
     validateEmail(email);
     this.firstName = firstName;
     this.lastName = lastName;

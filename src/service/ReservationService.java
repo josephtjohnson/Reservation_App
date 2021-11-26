@@ -43,13 +43,18 @@ public class ReservationService {
     }
 
     public void reserveARoom(Customer customer, IRoom room, Date checkInDate, Date checkOutDate, boolean isFree) {
-        Reservation reservation = new Reservation(customer, room, checkInDate, checkOutDate, isFree);
-        String mapKey = (customer.getFirstName() + " " + customer.getLastName());
-        if (!reservations.containsKey(mapKey)) {
-            reservations.putIfAbsent(mapKey, new ArrayList<>());
+        try {
+            Reservation reservation = new Reservation(customer, room, checkInDate, checkOutDate, isFree);
+            String mapKey = (customer.getFirstName() + " " + customer.getLastName());
+            if (!reservations.containsKey(mapKey)) {
+                reservations.putIfAbsent(mapKey, new ArrayList<>());
+            }
+            reservations.get(mapKey).add(reservation);
+            System.out.println(reservation);
         }
-        reservations.get(mapKey).add(reservation);
-        System.out.println(reservation);
+        catch (NullPointerException e) {
+            System.out.println("Customer information invalid.\n");
+        }
     }
 
     public Collection<IRoom> findAvailableRooms(Date checkInDate, Date checkOutDate) {
@@ -83,15 +88,25 @@ public class ReservationService {
     }
 
     public void printAllReservations() {
-        for (String reservation : reservations.keySet()) {
-            System.out.println(reservations.get(reservation));
+        if (reservations.isEmpty()) {
+            System.out.println("No reservations in database.");
+        }
+        else {
+            for (String reservation : reservations.keySet()) {
+                System.out.println(reservations.get(reservation));
+            }
         }
     }
 
     public void roomList() {
         List<IRoom> rooms = new ArrayList<>(roomList);
-        for (IRoom room : rooms) {
-            System.out.println(room);
+        if (rooms.isEmpty()) {
+            System.out.println("No rooms exist in database.");
+        }
+        else {
+            for (IRoom room : rooms) {
+                System.out.println(room);
+            }
         }
     }
 

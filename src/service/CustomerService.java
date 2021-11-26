@@ -36,9 +36,15 @@ public class CustomerService {
 
     public void customerList(){
         Collection<Customer> allCustomers = new HashSet<>(customers);
-        for(Customer customer: allCustomers){
-            System.out.println(customer);
+        if (allCustomers.isEmpty()) {
+            System.out.println("No customers in database.");
         }
+        else {
+            for(Customer customer: allCustomers) {
+                System.out.println(customer);
+            }
+        }
+
     }
 
 }

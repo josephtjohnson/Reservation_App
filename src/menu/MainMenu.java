@@ -34,15 +34,10 @@ public class MainMenu {
 
                     case 2:
                         getCustomersReservation();
-                        System.out.println("\n");
                         break;
 
                     case 3:
                         createCustomer();
-                        System.out.println("\n****************");
-                        System.out.println("CUSTOMER CREATED");
-                        System.out.println("****************");
-
                         break;
 
                     case 4:
@@ -78,23 +73,26 @@ public class MainMenu {
             System.out.println("Enter check-in date: mm-dd-yyyy");
             String checkInDate = dates.nextLine();
             checkIn = new SimpleDateFormat("MM-dd-yyyy").parse(checkInDate);
-            System.out.println("Enter check-out date: mm-dd-yyyy");
-            String checkOutDate = dates.nextLine();
-            checkOut = new SimpleDateFormat("MM-dd-yyyy").parse(checkOutDate);
-            System.out.println("Will this room be free? Y or N");
-            String cost = dates.nextLine();
-            switch (cost.toUpperCase()) {
-                case "Y":
-                    isFree = true;
-                    break;
-                case "N":
-                    break;
-                default:
-                    System.out.println("Input incorrect. \nPlease enter Y or N");
+            boolean in = true;
+            String checkOutDate = null;
+            while (in) {
+                try {
+                    System.out.println("Enter check-out date: mm-dd-yyyy");
+                    checkOutDate = dates.nextLine();
+                    checkOut = new SimpleDateFormat("MM-dd-yyyy").parse(checkOutDate);
+                    if (checkOutDate.equals(checkInDate) || (checkOut.before(checkIn))) {
+                        System.out.println("Checkout date must be after checkin date.");
+                    }
+                    else {
+                        in = false;
+                    }
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
             }
         } catch (Exception e) {
             System.out.println(e);
-            System.err.println("Input incorrect. \nPlease enter Y or N");
+            System.out.println("Please use the correct date format.");
         }
         System.out.println("Book a room? Y or N");
         Scanner book = new Scanner(System.in);
@@ -116,11 +114,11 @@ public class MainMenu {
                             }
                         }
                         else {
-                            System.out.println("No rooms available for the selected dates. Search for rooms?");
-                            String search = book.nextLine();;
                             boolean run = true;
                             while(run) {
                                 try {
+                                    System.out.println("No rooms available for the selected dates. Search for rooms?");
+                                    String search = book.nextLine();
                                     switch (search.toUpperCase()) {
                                         case "Y":
                                             Collection<IRoom> newRooms = new ArrayList<>(HotelResource.findARoom(checkIn, checkOut));
@@ -152,18 +150,31 @@ public class MainMenu {
                                             break;
                                         case "N":
                                             return;
+                                        default:
+                                            System.out.println("Input incorrect. Please enter Y or N.");
+
                                     }
                                 } catch (Exception e) {
                                     System.out.println(e);
                                 }
                             }
-                            System.out.println("\nBook room?");
-                            String confirm = book.nextLine();
-                            switch (confirm.toUpperCase()) {
-                                case "Y":
-                                    break;
-                                case "N":
-                                    return;
+                            boolean running = true;
+                            while (running) {
+                                try {
+                                    System.out.println("\nBook room?");
+                                    String confirm = book.nextLine();
+                                    switch (confirm.toUpperCase()) {
+                                        case "Y":
+                                            running = false;
+                                        case "N":
+                                            return;
+                                        default:
+                                            System.out.println("Input incorrect. Please enter Y or N.");
+                                    }
+                                }
+                                catch (Exception e) {
+                                    System.out.println(e);
+                                }
                             }
                         }
                     }
@@ -202,21 +213,41 @@ public class MainMenu {
         }
     }
     public static void getCustomersReservation() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter customer Email:" );
-        String email = scanner.next();
-        String customer = HotelResource.getCustomer(email).getFullName();
-        HotelResource.getCustomerReservations(customer);
-
+        try {
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("Enter customer Email:");
+            String email = scanner.next();
+            String customer = HotelResource.getCustomer(email).getFullName();
+            HotelResource.getCustomerReservations(customer);
+        }
+        catch (Exception e) {
+            System.out.println("");
+        }
     }
     public static void createCustomer() {
-        Scanner newCustomer = new Scanner(System.in);
-        System.out.println("Enter customer email: ");
-        String customerEmail = newCustomer.nextLine();
-        System.out.println("Enter customer first name: ");
-        String customerFirstName = newCustomer.nextLine();
-        System.out.println("Enter customer last name: ");
-        String customerLastName = newCustomer.nextLine();
-        HotelResource.createCustomer(customerEmail, customerFirstName, customerLastName);
+        try {
+            Scanner newCustomer = new Scanner(System.in);
+            System.out.println("Enter customer email: ");
+            String customerEmail = newCustomer.nextLine();
+            System.out.println("Enter customer first name: ");
+            String customerFirstName = newCustomer.nextLine();
+            if (customerFirstName.isEmpty()) {
+                System.out.println("First name cannot be empty.\n");
+                return;
+            }
+            System.out.println("Enter customer last name: ");
+            String customerLastName = newCustomer.nextLine();
+            if (customerLastName.isEmpty()) {
+                System.out.println("Last name cannot be empty.\n");
+                return;
+            }
+            HotelResource.createCustomer(customerEmail, customerFirstName, customerLastName);
+            System.out.println("\n****************");
+            System.out.println("CUSTOMER CREATED");
+            System.out.println("****************");
+        }
+        catch (IllegalArgumentException e) {
+            System.out.println("Email format not valid. Please use a valid email address\n");
+        }
     }
 }

@@ -69,34 +69,67 @@ public class AdminMenu {
         }
     }
     public static void addRooms() {
-        final AdminResource adminResource = AdminResource.getInstance();
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Please enter a room number");
-        String roomNumber = scanner.nextLine();
-        System.out.println("Please enter a room price");
-        Double roomPrice = Double.valueOf(scanner.nextLine());
-        System.out.println("Please enter a room type : (1) => SINGLE, (2) => DOUBLE");
-        String roomTypeInput = scanner.nextLine();
-        IRoom.RoomType roomType = null;
-        switch (roomTypeInput) {
-            case "1" -> roomType = IRoom.RoomType.SINGLE;
-            case "2" -> roomType = IRoom.RoomType.DOUBLE;
-            default -> System.out.println("Please enter a valid room type (1 or 2)");
+        try {
+            final AdminResource adminResource = AdminResource.getInstance();
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("Please enter a room number");
+            String roomNumber = scanner.nextLine();
+            System.out.println("Please enter a room price");
+            Double correctRoomPrice = null;
+            try {
+                correctRoomPrice = Double.valueOf(scanner.nextLine());
+            } catch (Exception e) {
+                System.out.println("Invalid input. Room price must be a number.");
+                return;
+            }
+            Double roomPrice = correctRoomPrice;
+            System.out.println("Please enter a room type : (1) => SINGLE, (2) => DOUBLE");
+            String roomTypeInput = scanner.nextLine();
+            IRoom.RoomType roomType = null;
+            try {
+                switch (roomTypeInput) {
+                    case "1":
+                        roomType = IRoom.RoomType.SINGLE;
+                        break;
+                    case "2":
+                        roomType = IRoom.RoomType.DOUBLE;
+                        break;
+                    default:
+                        System.out.println("Please enter a valid room type (1 or 2)");
+                        return;
+                }
+            }
+            catch (Exception e) {
+                System.out.println("");
+            }
+            System.out.println("Will this room be free? Y or N");
+            String cost = scanner.nextLine();
+            IRoom room = null;
+            try {
+                switch (cost.toUpperCase()) {
+                    case "Y":
+                        room = new FreeRoom(roomNumber, roomPrice, roomType, true);
+                        break;
+                    case "N":
+                        room = new Room(roomNumber, roomPrice, roomType, false);
+                        break;
+                    default:
+                        System.out.println("Input incorrect. \nPlease enter Y or N");
+                        return;
+                }
+            }
+            catch (Exception e) {
+                System.out.println("");
+            }
+            if (!adminResource.getAllRooms().contains(room)) {
+                HotelResource.addRoom(room);
+                System.out.println("Room added");
+            } else {
+                System.out.println("Room already exists");
+            }
         }
-        System.out.println("Will this room be free? Y or N");
-        String cost = scanner.nextLine();
-        IRoom room = null;
-        switch (cost.toUpperCase()) {
-            case "Y" -> room = new FreeRoom(roomNumber, roomPrice, roomType, true);
-            case "N" -> room = new Room(roomNumber, roomPrice, roomType, false);
-            default -> System.out.println("Input incorrect. \nPlease enter Y or N");
-        }
-        if (!adminResource.getAllRooms().contains(room)) {
-            HotelResource.addRoom(room);
-            System.out.println("Room added");
-        }
-        else{
-            System.out.println("Room already exists");
+        catch (Exception e) {
+            System.out.println("");
         }
     }
 }
