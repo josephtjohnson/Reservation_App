@@ -107,14 +107,75 @@ public class MainMenu {
                         break;
                     }
                     else {
-                        System.out.println("Here are all available hotel rooms");
                         Collection<IRoom> rooms = new ArrayList<>(HotelResource.findARoom(checkIn, checkOut));
-                        for (IRoom room : rooms) {
-                            System.out.println(room);
-                            roomNumbers.add(room.getRoomNumber());
+                        if (!rooms.isEmpty()){
+                            System.out.println("Here are all available hotel rooms");
+                            for (IRoom room : rooms) {
+                                System.out.println(room);
+                                roomNumbers.add(room.getRoomNumber());
+                            }
+                        }
+                        else {
+                            System.out.println("No rooms available for the selected dates. Search for rooms?");
+                            String search = book.nextLine();;
+                            boolean run = true;
+                            while(run) {
+                                try {
+                                    switch (search.toUpperCase()) {
+                                        case "Y":
+                                            Collection<IRoom> newRooms = new ArrayList<>(HotelResource.findARoom(checkIn, checkOut));
+                                            if (newRooms.isEmpty()) {
+                                                boolean keepRunning = true;
+                                                while (keepRunning) {
+                                                    checkIn = adminResource.addDays(checkIn, 7);
+                                                    checkOut = adminResource.addDays(checkOut, 7);
+                                                    newRooms = new ArrayList<>(HotelResource.findARoom(checkIn, checkOut));
+                                                    if (!newRooms.isEmpty()) {
+                                                        keepRunning = false;
+                                                    } else {
+                                                        System.out.println("Here are all available hotel rooms");
+                                                        System.out.println("Dates: " + checkIn + "-" + checkOut + "\n");
+                                                        for (IRoom room : newRooms) {
+                                                            System.out.println(room);
+                                                            roomNumbers.add(room.getRoomNumber());
+                                                        }
+                                                        keepRunning = false;
+                                                    }
+                                                    System.out.println("Here are all available hotel rooms");
+                                                    System.out.println("Dates: " + checkIn + "-" + checkOut + "\n");
+                                                    for (IRoom room : newRooms) {
+                                                        System.out.println(room);
+                                                        roomNumbers.add(room.getRoomNumber());
+                                                    }
+                                                    run = false;
+                                                }
+                                            } else {
+                                                System.out.println("Here are all available hotel rooms");
+                                                System.out.println("Dates: " + checkIn + "-" + checkOut + "\n");
+                                                for (IRoom room : newRooms) {
+                                                    System.out.println(room);
+                                                    roomNumbers.add(room.getRoomNumber());
+                                                }
+                                            }
+                                            break;
+                                        case "N":
+                                            return;
+                                    }
+                                } catch (Exception e) {
+                                    System.out.println(e);
+                                }
+                            }
+                            System.out.println("\nBook room?");
+                            String confirm = book.nextLine();
+                            switch (confirm.toUpperCase()) {
+                                case "Y":
+                                    break;
+                                case "N":
+                                    return;
+                            }
                         }
                     }
-                    System.out.println("Enter room number");
+                    System.out.println("\nEnter room number");
                     String roomNumber = null;
                     while(true) {
                         try {

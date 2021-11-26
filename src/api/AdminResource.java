@@ -40,4 +40,7 @@ public class AdminResource {
         reservationService.addTestRooms();
         reservationService.addTestReservations();
     }
+    public Date addDays(Date date, int number ) {
+    return reservationService.addDays(date, number);
+    }
 }

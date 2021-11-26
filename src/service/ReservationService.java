@@ -165,7 +165,7 @@ public class ReservationService {
         System.out.println("TEST RESERVATIONS CREATED");
 
     }
-    Date addDays(Date date, int days) {
+    public Date addDays(Date date, int days) {
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
         cal.add(Calendar.DATE, days); //minus number would decrement the days
