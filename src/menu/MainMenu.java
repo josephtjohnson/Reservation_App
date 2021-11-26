@@ -117,7 +117,7 @@ public class MainMenu {
                             boolean run = true;
                             while(run) {
                                 try {
-                                    System.out.println("No rooms available for the selected dates. Search for rooms?");
+                                    System.out.println("No rooms available for the selected dates. Search for rooms? Y/N");
                                     String search = book.nextLine();
                                     switch (search.toUpperCase()) {
                                         case "Y":
@@ -166,6 +166,7 @@ public class MainMenu {
                                     switch (confirm.toUpperCase()) {
                                         case "Y":
                                             running = false;
+                                            break;
                                         case "N":
                                             return;
                                         default:
